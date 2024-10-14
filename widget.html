@@ -1,0 +1,2294 @@
+
+    <html>
+    <head>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+            }
+            table {
+                width: auto;
+                border-collapse: collapse;
+            }
+            th, td {
+                padding: 10px;
+                text-align: left;
+            }
+            th {
+                background-color: #f2f2f2;
+            }
+            td.question {
+                width: 600px;
+            }
+            button {
+                margin: 5px;
+                padding: 10px;
+                font-size: 14px;
+            }
+            .section-header {
+                background-color: #e0e0e0;
+                font-weight: bold;
+            }
+            .question-row:nth-child(even) {
+                background-color: #f9f9f9;
+            }
+            .question-row:nth-child(odd) {
+                background-color: #e6f7ff;
+            }
+        </style>
+        <script>
+            function calculateScore() {
+                let categoryScores = {};
+                let categoryCounts = {};
+
+                let inputs = document.querySelectorAll('input[type=radio]:checked');
+
+                inputs.forEach(input => {
+                    let category = input.name.split('-')[0];
+                    let questionType = input.dataset.type;
+                    let value = parseInt(input.value);
+
+                    if (!categoryScores[category]) {
+                        categoryScores[category] = { sumA: 0, sumB: 0 };
+                        categoryCounts[category] = { countA: 0, countB: 0 };
+                    }
+
+                    if (questionType === 'A') {
+                        categoryScores[category].sumA += value;
+                        categoryCounts[category].countA += 1;
+                    } else if (questionType === 'B') {
+                        categoryScores[category].sumB += value;
+                        categoryCounts[category].countB += 1;
+                    }
+                });
+
+                let results = '';
+                let totalScore = 0;
+                let categoryNames = Object.keys(categoryScores);
+
+                categoryNames.forEach(category => {
+                    let sumA = categoryScores[category].sumA;
+                    let sumB = categoryScores[category].sumB;
+                    let n = categoryCounts[category].countA; // Assuming countA == countB
+
+                    let rawScore = sumA - sumB;
+
+                    let minPossibleScore = -4 * n;
+                    let maxPossibleScore = 4 * n;
+
+                    let normalizedScore = ((rawScore - minPossibleScore) / (maxPossibleScore - minPossibleScore)) * 100;
+
+                    totalScore += normalizedScore;
+                    results += `<strong>${category} Category Score:</strong> ${normalizedScore.toFixed(2)} / 100<br>`;
+                });
+
+                let aggregateScore = totalScore / categoryNames.length;
+                results += `<br><strong>Aggregate Score:</strong> ${aggregateScore.toFixed(2)} / 100`;
+
+                document.getElementById('results').innerHTML = results;
+            }
+
+            function debugSetAll(value) {
+                let inputs = document.querySelectorAll('input[type=radio]');
+
+                inputs.forEach(input => {
+                    if (parseInt(input.value) === value) {
+                        input.checked = true;
+                    }
+                });
+            }
+        </script>
+    </head>
+    <body>
+        <h2>AI Risk Pulse Survey</h2>
+        <p>When responding to this survey, please use the following guidelines:</p>
+        <ul>
+            <li>1 - Strongly Disagree</li>
+            <li>2 - Disagree</li>
+            <li>3 - Neutral</li>
+            <li>4 - Agree</li>
+            <li>5 - Strongly Agree</li>
+        </ul>
+        <form>
+            <table>
+                <tr>
+                    <th>Question</th>
+                    <th>1</th>
+                    <th>2</th>
+                    <th>3</th>
+                    <th>4</th>
+                    <th>5</th>
+                </tr>
+    <tr class='section-header'><td colspan='6'>Direct AI Experience - Set A</td></tr>
+                    <tr class="question-row">
+                        <td class="question">I have hands-on experience building and training AI models.</td>
+                        <td><input type="radio" name="Direct AI Experience-A-0" value="1" data-type="A"></td>
+                        <td><input type="radio" name="Direct AI Experience-A-0" value="2" data-type="A"></td>
+                        <td><input type="radio" name="Direct AI Experience-A-0" value="3" data-type="A"></td>
+                        <td><input type="radio" name="Direct AI Experience-A-0" value="4" data-type="A"></td>
+                        <td><input type="radio" name="Direct AI Experience-A-0" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">I have successfully deployed AI systems in production environments.</td>
+                        <td><input type="radio" name="Direct AI Experience-A-1" value="1" data-type="A"></td>
+                        <td><input type="radio" name="Direct AI Experience-A-1" value="2" data-type="A"></td>
+                        <td><input type="radio" name="Direct AI Experience-A-1" value="3" data-type="A"></td>
+                        <td><input type="radio" name="Direct AI Experience-A-1" value="4" data-type="A"></td>
+                        <td><input type="radio" name="Direct AI Experience-A-1" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">AI tools or systems are a major component of my daily work activities.</td>
+                        <td><input type="radio" name="Direct AI Experience-A-2" value="1" data-type="A"></td>
+                        <td><input type="radio" name="Direct AI Experience-A-2" value="2" data-type="A"></td>
+                        <td><input type="radio" name="Direct AI Experience-A-2" value="3" data-type="A"></td>
+                        <td><input type="radio" name="Direct AI Experience-A-2" value="4" data-type="A"></td>
+                        <td><input type="radio" name="Direct AI Experience-A-2" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">I have contributed to AI research projects in academic or industry settings.</td>
+                        <td><input type="radio" name="Direct AI Experience-A-3" value="1" data-type="A"></td>
+                        <td><input type="radio" name="Direct AI Experience-A-3" value="2" data-type="A"></td>
+                        <td><input type="radio" name="Direct AI Experience-A-3" value="3" data-type="A"></td>
+                        <td><input type="radio" name="Direct AI Experience-A-3" value="4" data-type="A"></td>
+                        <td><input type="radio" name="Direct AI Experience-A-3" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">I am proficient in using popular AI frameworks and libraries (e.g., TensorFlow, PyTorch).</td>
+                        <td><input type="radio" name="Direct AI Experience-A-4" value="1" data-type="A"></td>
+                        <td><input type="radio" name="Direct AI Experience-A-4" value="2" data-type="A"></td>
+                        <td><input type="radio" name="Direct AI Experience-A-4" value="3" data-type="A"></td>
+                        <td><input type="radio" name="Direct AI Experience-A-4" value="4" data-type="A"></td>
+                        <td><input type="radio" name="Direct AI Experience-A-4" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">I have experience in fine-tuning pre-trained AI models for specific tasks.</td>
+                        <td><input type="radio" name="Direct AI Experience-A-5" value="1" data-type="A"></td>
+                        <td><input type="radio" name="Direct AI Experience-A-5" value="2" data-type="A"></td>
+                        <td><input type="radio" name="Direct AI Experience-A-5" value="3" data-type="A"></td>
+                        <td><input type="radio" name="Direct AI Experience-A-5" value="4" data-type="A"></td>
+                        <td><input type="radio" name="Direct AI Experience-A-5" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">I have worked on natural language processing (NLP) projects using AI.</td>
+                        <td><input type="radio" name="Direct AI Experience-A-6" value="1" data-type="A"></td>
+                        <td><input type="radio" name="Direct AI Experience-A-6" value="2" data-type="A"></td>
+                        <td><input type="radio" name="Direct AI Experience-A-6" value="3" data-type="A"></td>
+                        <td><input type="radio" name="Direct AI Experience-A-6" value="4" data-type="A"></td>
+                        <td><input type="radio" name="Direct AI Experience-A-6" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">I have implemented computer vision algorithms using AI techniques.</td>
+                        <td><input type="radio" name="Direct AI Experience-A-7" value="1" data-type="A"></td>
+                        <td><input type="radio" name="Direct AI Experience-A-7" value="2" data-type="A"></td>
+                        <td><input type="radio" name="Direct AI Experience-A-7" value="3" data-type="A"></td>
+                        <td><input type="radio" name="Direct AI Experience-A-7" value="4" data-type="A"></td>
+                        <td><input type="radio" name="Direct AI Experience-A-7" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">I have experience with reinforcement learning algorithms and applications.</td>
+                        <td><input type="radio" name="Direct AI Experience-A-8" value="1" data-type="A"></td>
+                        <td><input type="radio" name="Direct AI Experience-A-8" value="2" data-type="A"></td>
+                        <td><input type="radio" name="Direct AI Experience-A-8" value="3" data-type="A"></td>
+                        <td><input type="radio" name="Direct AI Experience-A-8" value="4" data-type="A"></td>
+                        <td><input type="radio" name="Direct AI Experience-A-8" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">I have worked on AI projects involving large-scale data processing.</td>
+                        <td><input type="radio" name="Direct AI Experience-A-9" value="1" data-type="A"></td>
+                        <td><input type="radio" name="Direct AI Experience-A-9" value="2" data-type="A"></td>
+                        <td><input type="radio" name="Direct AI Experience-A-9" value="3" data-type="A"></td>
+                        <td><input type="radio" name="Direct AI Experience-A-9" value="4" data-type="A"></td>
+                        <td><input type="radio" name="Direct AI Experience-A-9" value="5" data-type="A"></td>
+                    </tr>
+                <tr class='section-header'><td colspan='6'>Direct AI Experience - Set B</td></tr>
+                    <tr class="question-row">
+                        <td class="question">I have never personally built or trained an AI model.</td>
+                        <td><input type="radio" name="Direct AI Experience-B-0" value="1" data-type="B"></td>
+                        <td><input type="radio" name="Direct AI Experience-B-0" value="2" data-type="B"></td>
+                        <td><input type="radio" name="Direct AI Experience-B-0" value="3" data-type="B"></td>
+                        <td><input type="radio" name="Direct AI Experience-B-0" value="4" data-type="B"></td>
+                        <td><input type="radio" name="Direct AI Experience-B-0" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">I lack experience in deploying AI systems in real-world environments.</td>
+                        <td><input type="radio" name="Direct AI Experience-B-1" value="1" data-type="B"></td>
+                        <td><input type="radio" name="Direct AI Experience-B-1" value="2" data-type="B"></td>
+                        <td><input type="radio" name="Direct AI Experience-B-1" value="3" data-type="B"></td>
+                        <td><input type="radio" name="Direct AI Experience-B-1" value="4" data-type="B"></td>
+                        <td><input type="radio" name="Direct AI Experience-B-1" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">AI tools or systems play a minimal role in my work activities.</td>
+                        <td><input type="radio" name="Direct AI Experience-B-2" value="1" data-type="B"></td>
+                        <td><input type="radio" name="Direct AI Experience-B-2" value="2" data-type="B"></td>
+                        <td><input type="radio" name="Direct AI Experience-B-2" value="3" data-type="B"></td>
+                        <td><input type="radio" name="Direct AI Experience-B-2" value="4" data-type="B"></td>
+                        <td><input type="radio" name="Direct AI Experience-B-2" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">I have not participated in any formal AI research projects.</td>
+                        <td><input type="radio" name="Direct AI Experience-B-3" value="1" data-type="B"></td>
+                        <td><input type="radio" name="Direct AI Experience-B-3" value="2" data-type="B"></td>
+                        <td><input type="radio" name="Direct AI Experience-B-3" value="3" data-type="B"></td>
+                        <td><input type="radio" name="Direct AI Experience-B-3" value="4" data-type="B"></td>
+                        <td><input type="radio" name="Direct AI Experience-B-3" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">I find it challenging to use common AI frameworks and libraries.</td>
+                        <td><input type="radio" name="Direct AI Experience-B-4" value="1" data-type="B"></td>
+                        <td><input type="radio" name="Direct AI Experience-B-4" value="2" data-type="B"></td>
+                        <td><input type="radio" name="Direct AI Experience-B-4" value="3" data-type="B"></td>
+                        <td><input type="radio" name="Direct AI Experience-B-4" value="4" data-type="B"></td>
+                        <td><input type="radio" name="Direct AI Experience-B-4" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">I have not attempted to fine-tune or customize pre-existing AI models.</td>
+                        <td><input type="radio" name="Direct AI Experience-B-5" value="1" data-type="B"></td>
+                        <td><input type="radio" name="Direct AI Experience-B-5" value="2" data-type="B"></td>
+                        <td><input type="radio" name="Direct AI Experience-B-5" value="3" data-type="B"></td>
+                        <td><input type="radio" name="Direct AI Experience-B-5" value="4" data-type="B"></td>
+                        <td><input type="radio" name="Direct AI Experience-B-5" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">I have no practical experience with AI-based natural language processing.</td>
+                        <td><input type="radio" name="Direct AI Experience-B-6" value="1" data-type="B"></td>
+                        <td><input type="radio" name="Direct AI Experience-B-6" value="2" data-type="B"></td>
+                        <td><input type="radio" name="Direct AI Experience-B-6" value="3" data-type="B"></td>
+                        <td><input type="radio" name="Direct AI Experience-B-6" value="4" data-type="B"></td>
+                        <td><input type="radio" name="Direct AI Experience-B-6" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">I have not worked on any computer vision projects involving AI.</td>
+                        <td><input type="radio" name="Direct AI Experience-B-7" value="1" data-type="B"></td>
+                        <td><input type="radio" name="Direct AI Experience-B-7" value="2" data-type="B"></td>
+                        <td><input type="radio" name="Direct AI Experience-B-7" value="3" data-type="B"></td>
+                        <td><input type="radio" name="Direct AI Experience-B-7" value="4" data-type="B"></td>
+                        <td><input type="radio" name="Direct AI Experience-B-7" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">I am unfamiliar with implementing reinforcement learning algorithms.</td>
+                        <td><input type="radio" name="Direct AI Experience-B-8" value="1" data-type="B"></td>
+                        <td><input type="radio" name="Direct AI Experience-B-8" value="2" data-type="B"></td>
+                        <td><input type="radio" name="Direct AI Experience-B-8" value="3" data-type="B"></td>
+                        <td><input type="radio" name="Direct AI Experience-B-8" value="4" data-type="B"></td>
+                        <td><input type="radio" name="Direct AI Experience-B-8" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">I have not been involved in AI projects requiring large-scale data handling.</td>
+                        <td><input type="radio" name="Direct AI Experience-B-9" value="1" data-type="B"></td>
+                        <td><input type="radio" name="Direct AI Experience-B-9" value="2" data-type="B"></td>
+                        <td><input type="radio" name="Direct AI Experience-B-9" value="3" data-type="B"></td>
+                        <td><input type="radio" name="Direct AI Experience-B-9" value="4" data-type="B"></td>
+                        <td><input type="radio" name="Direct AI Experience-B-9" value="5" data-type="B"></td>
+                    </tr>
+                <tr class='section-header'><td colspan='6'>Adjacent Tech Experience - Set A</td></tr>
+                    <tr class="question-row">
+                        <td class="question">I have extensive experience configuring and managing network firewalls.</td>
+                        <td><input type="radio" name="Adjacent Tech Experience-A-0" value="1" data-type="A"></td>
+                        <td><input type="radio" name="Adjacent Tech Experience-A-0" value="2" data-type="A"></td>
+                        <td><input type="radio" name="Adjacent Tech Experience-A-0" value="3" data-type="A"></td>
+                        <td><input type="radio" name="Adjacent Tech Experience-A-0" value="4" data-type="A"></td>
+                        <td><input type="radio" name="Adjacent Tech Experience-A-0" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">I am proficient in deploying and managing cloud services (e.g., AWS, Azure, GCP).</td>
+                        <td><input type="radio" name="Adjacent Tech Experience-A-1" value="1" data-type="A"></td>
+                        <td><input type="radio" name="Adjacent Tech Experience-A-1" value="2" data-type="A"></td>
+                        <td><input type="radio" name="Adjacent Tech Experience-A-1" value="3" data-type="A"></td>
+                        <td><input type="radio" name="Adjacent Tech Experience-A-1" value="4" data-type="A"></td>
+                        <td><input type="radio" name="Adjacent Tech Experience-A-1" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">I have strong programming skills in one or more languages.</td>
+                        <td><input type="radio" name="Adjacent Tech Experience-A-2" value="1" data-type="A"></td>
+                        <td><input type="radio" name="Adjacent Tech Experience-A-2" value="2" data-type="A"></td>
+                        <td><input type="radio" name="Adjacent Tech Experience-A-2" value="3" data-type="A"></td>
+                        <td><input type="radio" name="Adjacent Tech Experience-A-2" value="4" data-type="A"></td>
+                        <td><input type="radio" name="Adjacent Tech Experience-A-2" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">I have been responsible for the overall management of technical systems or platforms.</td>
+                        <td><input type="radio" name="Adjacent Tech Experience-A-3" value="1" data-type="A"></td>
+                        <td><input type="radio" name="Adjacent Tech Experience-A-3" value="2" data-type="A"></td>
+                        <td><input type="radio" name="Adjacent Tech Experience-A-3" value="3" data-type="A"></td>
+                        <td><input type="radio" name="Adjacent Tech Experience-A-3" value="4" data-type="A"></td>
+                        <td><input type="radio" name="Adjacent Tech Experience-A-3" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">I have experience in designing and implementing complex software architectures.</td>
+                        <td><input type="radio" name="Adjacent Tech Experience-A-4" value="1" data-type="A"></td>
+                        <td><input type="radio" name="Adjacent Tech Experience-A-4" value="2" data-type="A"></td>
+                        <td><input type="radio" name="Adjacent Tech Experience-A-4" value="3" data-type="A"></td>
+                        <td><input type="radio" name="Adjacent Tech Experience-A-4" value="4" data-type="A"></td>
+                        <td><input type="radio" name="Adjacent Tech Experience-A-4" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">I am skilled in database design and management.</td>
+                        <td><input type="radio" name="Adjacent Tech Experience-A-5" value="1" data-type="A"></td>
+                        <td><input type="radio" name="Adjacent Tech Experience-A-5" value="2" data-type="A"></td>
+                        <td><input type="radio" name="Adjacent Tech Experience-A-5" value="3" data-type="A"></td>
+                        <td><input type="radio" name="Adjacent Tech Experience-A-5" value="4" data-type="A"></td>
+                        <td><input type="radio" name="Adjacent Tech Experience-A-5" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">I have hands-on experience with cybersecurity practices and tools.</td>
+                        <td><input type="radio" name="Adjacent Tech Experience-A-6" value="1" data-type="A"></td>
+                        <td><input type="radio" name="Adjacent Tech Experience-A-6" value="2" data-type="A"></td>
+                        <td><input type="radio" name="Adjacent Tech Experience-A-6" value="3" data-type="A"></td>
+                        <td><input type="radio" name="Adjacent Tech Experience-A-6" value="4" data-type="A"></td>
+                        <td><input type="radio" name="Adjacent Tech Experience-A-6" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">I have conducted or managed penetration testing and vulnerability assessments.</td>
+                        <td><input type="radio" name="Adjacent Tech Experience-A-7" value="1" data-type="A"></td>
+                        <td><input type="radio" name="Adjacent Tech Experience-A-7" value="2" data-type="A"></td>
+                        <td><input type="radio" name="Adjacent Tech Experience-A-7" value="3" data-type="A"></td>
+                        <td><input type="radio" name="Adjacent Tech Experience-A-7" value="4" data-type="A"></td>
+                        <td><input type="radio" name="Adjacent Tech Experience-A-7" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">I am experienced in managing and scaling IT infrastructure.</td>
+                        <td><input type="radio" name="Adjacent Tech Experience-A-8" value="1" data-type="A"></td>
+                        <td><input type="radio" name="Adjacent Tech Experience-A-8" value="2" data-type="A"></td>
+                        <td><input type="radio" name="Adjacent Tech Experience-A-8" value="3" data-type="A"></td>
+                        <td><input type="radio" name="Adjacent Tech Experience-A-8" value="4" data-type="A"></td>
+                        <td><input type="radio" name="Adjacent Tech Experience-A-8" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">I have worked on projects involving IoT (Internet of Things) technologies.</td>
+                        <td><input type="radio" name="Adjacent Tech Experience-A-9" value="1" data-type="A"></td>
+                        <td><input type="radio" name="Adjacent Tech Experience-A-9" value="2" data-type="A"></td>
+                        <td><input type="radio" name="Adjacent Tech Experience-A-9" value="3" data-type="A"></td>
+                        <td><input type="radio" name="Adjacent Tech Experience-A-9" value="4" data-type="A"></td>
+                        <td><input type="radio" name="Adjacent Tech Experience-A-9" value="5" data-type="A"></td>
+                    </tr>
+                <tr class='section-header'><td colspan='6'>Adjacent Tech Experience - Set B</td></tr>
+                    <tr class="question-row">
+                        <td class="question">I find it challenging to configure or manage network security devices.</td>
+                        <td><input type="radio" name="Adjacent Tech Experience-B-0" value="1" data-type="B"></td>
+                        <td><input type="radio" name="Adjacent Tech Experience-B-0" value="2" data-type="B"></td>
+                        <td><input type="radio" name="Adjacent Tech Experience-B-0" value="3" data-type="B"></td>
+                        <td><input type="radio" name="Adjacent Tech Experience-B-0" value="4" data-type="B"></td>
+                        <td><input type="radio" name="Adjacent Tech Experience-B-0" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">I have limited experience working with cloud computing platforms.</td>
+                        <td><input type="radio" name="Adjacent Tech Experience-B-1" value="1" data-type="B"></td>
+                        <td><input type="radio" name="Adjacent Tech Experience-B-1" value="2" data-type="B"></td>
+                        <td><input type="radio" name="Adjacent Tech Experience-B-1" value="3" data-type="B"></td>
+                        <td><input type="radio" name="Adjacent Tech Experience-B-1" value="4" data-type="B"></td>
+                        <td><input type="radio" name="Adjacent Tech Experience-B-1" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">I do not consider myself proficient in any programming languages.</td>
+                        <td><input type="radio" name="Adjacent Tech Experience-B-2" value="1" data-type="B"></td>
+                        <td><input type="radio" name="Adjacent Tech Experience-B-2" value="2" data-type="B"></td>
+                        <td><input type="radio" name="Adjacent Tech Experience-B-2" value="3" data-type="B"></td>
+                        <td><input type="radio" name="Adjacent Tech Experience-B-2" value="4" data-type="B"></td>
+                        <td><input type="radio" name="Adjacent Tech Experience-B-2" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">I have not held positions where I was accountable for technical systems or platforms.</td>
+                        <td><input type="radio" name="Adjacent Tech Experience-B-3" value="1" data-type="B"></td>
+                        <td><input type="radio" name="Adjacent Tech Experience-B-3" value="2" data-type="B"></td>
+                        <td><input type="radio" name="Adjacent Tech Experience-B-3" value="3" data-type="B"></td>
+                        <td><input type="radio" name="Adjacent Tech Experience-B-3" value="4" data-type="B"></td>
+                        <td><input type="radio" name="Adjacent Tech Experience-B-3" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">I have not been involved in designing complex software or system architectures.</td>
+                        <td><input type="radio" name="Adjacent Tech Experience-B-4" value="1" data-type="B"></td>
+                        <td><input type="radio" name="Adjacent Tech Experience-B-4" value="2" data-type="B"></td>
+                        <td><input type="radio" name="Adjacent Tech Experience-B-4" value="3" data-type="B"></td>
+                        <td><input type="radio" name="Adjacent Tech Experience-B-4" value="4" data-type="B"></td>
+                        <td><input type="radio" name="Adjacent Tech Experience-B-4" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">I have minimal experience with database management or design.</td>
+                        <td><input type="radio" name="Adjacent Tech Experience-B-5" value="1" data-type="B"></td>
+                        <td><input type="radio" name="Adjacent Tech Experience-B-5" value="2" data-type="B"></td>
+                        <td><input type="radio" name="Adjacent Tech Experience-B-5" value="3" data-type="B"></td>
+                        <td><input type="radio" name="Adjacent Tech Experience-B-5" value="4" data-type="B"></td>
+                        <td><input type="radio" name="Adjacent Tech Experience-B-5" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">I am not well-versed in cybersecurity practices or tools.</td>
+                        <td><input type="radio" name="Adjacent Tech Experience-B-6" value="1" data-type="B"></td>
+                        <td><input type="radio" name="Adjacent Tech Experience-B-6" value="2" data-type="B"></td>
+                        <td><input type="radio" name="Adjacent Tech Experience-B-6" value="3" data-type="B"></td>
+                        <td><input type="radio" name="Adjacent Tech Experience-B-6" value="4" data-type="B"></td>
+                        <td><input type="radio" name="Adjacent Tech Experience-B-6" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">I have never participated in penetration testing or vulnerability assessments.</td>
+                        <td><input type="radio" name="Adjacent Tech Experience-B-7" value="1" data-type="B"></td>
+                        <td><input type="radio" name="Adjacent Tech Experience-B-7" value="2" data-type="B"></td>
+                        <td><input type="radio" name="Adjacent Tech Experience-B-7" value="3" data-type="B"></td>
+                        <td><input type="radio" name="Adjacent Tech Experience-B-7" value="4" data-type="B"></td>
+                        <td><input type="radio" name="Adjacent Tech Experience-B-7" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">I have limited experience in managing or scaling IT infrastructure.</td>
+                        <td><input type="radio" name="Adjacent Tech Experience-B-8" value="1" data-type="B"></td>
+                        <td><input type="radio" name="Adjacent Tech Experience-B-8" value="2" data-type="B"></td>
+                        <td><input type="radio" name="Adjacent Tech Experience-B-8" value="3" data-type="B"></td>
+                        <td><input type="radio" name="Adjacent Tech Experience-B-8" value="4" data-type="B"></td>
+                        <td><input type="radio" name="Adjacent Tech Experience-B-8" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">I have not worked on any projects involving IoT technologies.</td>
+                        <td><input type="radio" name="Adjacent Tech Experience-B-9" value="1" data-type="B"></td>
+                        <td><input type="radio" name="Adjacent Tech Experience-B-9" value="2" data-type="B"></td>
+                        <td><input type="radio" name="Adjacent Tech Experience-B-9" value="3" data-type="B"></td>
+                        <td><input type="radio" name="Adjacent Tech Experience-B-9" value="4" data-type="B"></td>
+                        <td><input type="radio" name="Adjacent Tech Experience-B-9" value="5" data-type="B"></td>
+                    </tr>
+                <tr class='section-header'><td colspan='6'>AI-Related Education - Set A</td></tr>
+                    <tr class="question-row">
+                        <td class="question">I hold an undergraduate degree in a STEM field.</td>
+                        <td><input type="radio" name="AI-Related Education-A-0" value="1" data-type="A"></td>
+                        <td><input type="radio" name="AI-Related Education-A-0" value="2" data-type="A"></td>
+                        <td><input type="radio" name="AI-Related Education-A-0" value="3" data-type="A"></td>
+                        <td><input type="radio" name="AI-Related Education-A-0" value="4" data-type="A"></td>
+                        <td><input type="radio" name="AI-Related Education-A-0" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">I have a graduate degree (Master's or Ph.D.) in a STEM discipline.</td>
+                        <td><input type="radio" name="AI-Related Education-A-1" value="1" data-type="A"></td>
+                        <td><input type="radio" name="AI-Related Education-A-1" value="2" data-type="A"></td>
+                        <td><input type="radio" name="AI-Related Education-A-1" value="3" data-type="A"></td>
+                        <td><input type="radio" name="AI-Related Education-A-1" value="4" data-type="A"></td>
+                        <td><input type="radio" name="AI-Related Education-A-1" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">I have completed a degree in Computer Science or Computer Engineering.</td>
+                        <td><input type="radio" name="AI-Related Education-A-2" value="1" data-type="A"></td>
+                        <td><input type="radio" name="AI-Related Education-A-2" value="2" data-type="A"></td>
+                        <td><input type="radio" name="AI-Related Education-A-2" value="3" data-type="A"></td>
+                        <td><input type="radio" name="AI-Related Education-A-2" value="4" data-type="A"></td>
+                        <td><input type="radio" name="AI-Related Education-A-2" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">I have pursued advanced studies specifically in AI or Machine Learning.</td>
+                        <td><input type="radio" name="AI-Related Education-A-3" value="1" data-type="A"></td>
+                        <td><input type="radio" name="AI-Related Education-A-3" value="2" data-type="A"></td>
+                        <td><input type="radio" name="AI-Related Education-A-3" value="3" data-type="A"></td>
+                        <td><input type="radio" name="AI-Related Education-A-3" value="4" data-type="A"></td>
+                        <td><input type="radio" name="AI-Related Education-A-3" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">I have completed accredited online courses in AI or ML from platforms like Coursera or edX.</td>
+                        <td><input type="radio" name="AI-Related Education-A-4" value="1" data-type="A"></td>
+                        <td><input type="radio" name="AI-Related Education-A-4" value="2" data-type="A"></td>
+                        <td><input type="radio" name="AI-Related Education-A-4" value="3" data-type="A"></td>
+                        <td><input type="radio" name="AI-Related Education-A-4" value="4" data-type="A"></td>
+                        <td><input type="radio" name="AI-Related Education-A-4" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">I hold professional certifications related to AI or data science.</td>
+                        <td><input type="radio" name="AI-Related Education-A-5" value="1" data-type="A"></td>
+                        <td><input type="radio" name="AI-Related Education-A-5" value="2" data-type="A"></td>
+                        <td><input type="radio" name="AI-Related Education-A-5" value="3" data-type="A"></td>
+                        <td><input type="radio" name="AI-Related Education-A-5" value="4" data-type="A"></td>
+                        <td><input type="radio" name="AI-Related Education-A-5" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">I have attended formal workshops or training programs on AI ethics.</td>
+                        <td><input type="radio" name="AI-Related Education-A-6" value="1" data-type="A"></td>
+                        <td><input type="radio" name="AI-Related Education-A-6" value="2" data-type="A"></td>
+                        <td><input type="radio" name="AI-Related Education-A-6" value="3" data-type="A"></td>
+                        <td><input type="radio" name="AI-Related Education-A-6" value="4" data-type="A"></td>
+                        <td><input type="radio" name="AI-Related Education-A-6" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">My educational background provides a strong foundation for understanding AI concepts.</td>
+                        <td><input type="radio" name="AI-Related Education-A-7" value="1" data-type="A"></td>
+                        <td><input type="radio" name="AI-Related Education-A-7" value="2" data-type="A"></td>
+                        <td><input type="radio" name="AI-Related Education-A-7" value="3" data-type="A"></td>
+                        <td><input type="radio" name="AI-Related Education-A-7" value="4" data-type="A"></td>
+                        <td><input type="radio" name="AI-Related Education-A-7" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">I have completed coursework in advanced mathematics relevant to AI (e.g., linear algebra, calculus, statistics).</td>
+                        <td><input type="radio" name="AI-Related Education-A-8" value="1" data-type="A"></td>
+                        <td><input type="radio" name="AI-Related Education-A-8" value="2" data-type="A"></td>
+                        <td><input type="radio" name="AI-Related Education-A-8" value="3" data-type="A"></td>
+                        <td><input type="radio" name="AI-Related Education-A-8" value="4" data-type="A"></td>
+                        <td><input type="radio" name="AI-Related Education-A-8" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">I have participated in academic research projects related to AI during my studies.</td>
+                        <td><input type="radio" name="AI-Related Education-A-9" value="1" data-type="A"></td>
+                        <td><input type="radio" name="AI-Related Education-A-9" value="2" data-type="A"></td>
+                        <td><input type="radio" name="AI-Related Education-A-9" value="3" data-type="A"></td>
+                        <td><input type="radio" name="AI-Related Education-A-9" value="4" data-type="A"></td>
+                        <td><input type="radio" name="AI-Related Education-A-9" value="5" data-type="A"></td>
+                    </tr>
+                <tr class='section-header'><td colspan='6'>AI-Related Education - Set B</td></tr>
+                    <tr class="question-row">
+                        <td class="question">I do not have any formal education in STEM fields.</td>
+                        <td><input type="radio" name="AI-Related Education-B-0" value="1" data-type="B"></td>
+                        <td><input type="radio" name="AI-Related Education-B-0" value="2" data-type="B"></td>
+                        <td><input type="radio" name="AI-Related Education-B-0" value="3" data-type="B"></td>
+                        <td><input type="radio" name="AI-Related Education-B-0" value="4" data-type="B"></td>
+                        <td><input type="radio" name="AI-Related Education-B-0" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">My highest level of education is not in a STEM-related field.</td>
+                        <td><input type="radio" name="AI-Related Education-B-1" value="1" data-type="B"></td>
+                        <td><input type="radio" name="AI-Related Education-B-1" value="2" data-type="B"></td>
+                        <td><input type="radio" name="AI-Related Education-B-1" value="3" data-type="B"></td>
+                        <td><input type="radio" name="AI-Related Education-B-1" value="4" data-type="B"></td>
+                        <td><input type="radio" name="AI-Related Education-B-1" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">I have not studied Computer Science or Computer Engineering academically.</td>
+                        <td><input type="radio" name="AI-Related Education-B-2" value="1" data-type="B"></td>
+                        <td><input type="radio" name="AI-Related Education-B-2" value="2" data-type="B"></td>
+                        <td><input type="radio" name="AI-Related Education-B-2" value="3" data-type="B"></td>
+                        <td><input type="radio" name="AI-Related Education-B-2" value="4" data-type="B"></td>
+                        <td><input type="radio" name="AI-Related Education-B-2" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">I have not pursued any specialized education in AI or Machine Learning.</td>
+                        <td><input type="radio" name="AI-Related Education-B-3" value="1" data-type="B"></td>
+                        <td><input type="radio" name="AI-Related Education-B-3" value="2" data-type="B"></td>
+                        <td><input type="radio" name="AI-Related Education-B-3" value="3" data-type="B"></td>
+                        <td><input type="radio" name="AI-Related Education-B-3" value="4" data-type="B"></td>
+                        <td><input type="radio" name="AI-Related Education-B-3" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">I have not completed any online courses focused on AI or ML.</td>
+                        <td><input type="radio" name="AI-Related Education-B-4" value="1" data-type="B"></td>
+                        <td><input type="radio" name="AI-Related Education-B-4" value="2" data-type="B"></td>
+                        <td><input type="radio" name="AI-Related Education-B-4" value="3" data-type="B"></td>
+                        <td><input type="radio" name="AI-Related Education-B-4" value="4" data-type="B"></td>
+                        <td><input type="radio" name="AI-Related Education-B-4" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">I do not hold any professional certifications related to AI or data science.</td>
+                        <td><input type="radio" name="AI-Related Education-B-5" value="1" data-type="B"></td>
+                        <td><input type="radio" name="AI-Related Education-B-5" value="2" data-type="B"></td>
+                        <td><input type="radio" name="AI-Related Education-B-5" value="3" data-type="B"></td>
+                        <td><input type="radio" name="AI-Related Education-B-5" value="4" data-type="B"></td>
+                        <td><input type="radio" name="AI-Related Education-B-5" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">I have not received any formal training in AI ethics.</td>
+                        <td><input type="radio" name="AI-Related Education-B-6" value="1" data-type="B"></td>
+                        <td><input type="radio" name="AI-Related Education-B-6" value="2" data-type="B"></td>
+                        <td><input type="radio" name="AI-Related Education-B-6" value="3" data-type="B"></td>
+                        <td><input type="radio" name="AI-Related Education-B-6" value="4" data-type="B"></td>
+                        <td><input type="radio" name="AI-Related Education-B-6" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">My educational background is primarily in non-technical fields (e.g., liberal arts, humanities).</td>
+                        <td><input type="radio" name="AI-Related Education-B-7" value="1" data-type="B"></td>
+                        <td><input type="radio" name="AI-Related Education-B-7" value="2" data-type="B"></td>
+                        <td><input type="radio" name="AI-Related Education-B-7" value="3" data-type="B"></td>
+                        <td><input type="radio" name="AI-Related Education-B-7" value="4" data-type="B"></td>
+                        <td><input type="radio" name="AI-Related Education-B-7" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">I have not taken advanced mathematics courses relevant to AI.</td>
+                        <td><input type="radio" name="AI-Related Education-B-8" value="1" data-type="B"></td>
+                        <td><input type="radio" name="AI-Related Education-B-8" value="2" data-type="B"></td>
+                        <td><input type="radio" name="AI-Related Education-B-8" value="3" data-type="B"></td>
+                        <td><input type="radio" name="AI-Related Education-B-8" value="4" data-type="B"></td>
+                        <td><input type="radio" name="AI-Related Education-B-8" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">I have not been involved in any academic research projects related to AI.</td>
+                        <td><input type="radio" name="AI-Related Education-B-9" value="1" data-type="B"></td>
+                        <td><input type="radio" name="AI-Related Education-B-9" value="2" data-type="B"></td>
+                        <td><input type="radio" name="AI-Related Education-B-9" value="3" data-type="B"></td>
+                        <td><input type="radio" name="AI-Related Education-B-9" value="4" data-type="B"></td>
+                        <td><input type="radio" name="AI-Related Education-B-9" value="5" data-type="B"></td>
+                    </tr>
+                <tr class='section-header'><td colspan='6'>Conspiracy Theory Risk Factors - Set A</td></tr>
+                    <tr class="question-row">
+                        <td class="question">I generally feel calm and relaxed in my daily life.</td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-A-0" value="1" data-type="A"></td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-A-0" value="2" data-type="A"></td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-A-0" value="3" data-type="A"></td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-A-0" value="4" data-type="A"></td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-A-0" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">I maintain a positive outlook despite life's challenges.</td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-A-1" value="1" data-type="A"></td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-A-1" value="2" data-type="A"></td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-A-1" value="3" data-type="A"></td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-A-1" value="4" data-type="A"></td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-A-1" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">I have a strong support network of friends and family.</td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-A-2" value="1" data-type="A"></td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-A-2" value="2" data-type="A"></td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-A-2" value="3" data-type="A"></td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-A-2" value="4" data-type="A"></td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-A-2" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">I rarely experience prolonged periods of sadness or hopelessness.</td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-A-3" value="1" data-type="A"></td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-A-3" value="2" data-type="A"></td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-A-3" value="3" data-type="A"></td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-A-3" value="4" data-type="A"></td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-A-3" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">I am generally in good physical health.</td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-A-4" value="1" data-type="A"></td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-A-4" value="2" data-type="A"></td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-A-4" value="3" data-type="A"></td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-A-4" value="4" data-type="A"></td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-A-4" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">I find it easy to trust others and institutions.</td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-A-5" value="1" data-type="A"></td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-A-5" value="2" data-type="A"></td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-A-5" value="3" data-type="A"></td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-A-5" value="4" data-type="A"></td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-A-5" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">I feel connected to my community and society at large.</td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-A-6" value="1" data-type="A"></td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-A-6" value="2" data-type="A"></td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-A-6" value="3" data-type="A"></td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-A-6" value="4" data-type="A"></td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-A-6" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">I cope well with uncertainty and unpredictable situations.</td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-A-7" value="1" data-type="A"></td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-A-7" value="2" data-type="A"></td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-A-7" value="3" data-type="A"></td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-A-7" value="4" data-type="A"></td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-A-7" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">I rarely feel overwhelmed by world events or news.</td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-A-8" value="1" data-type="A"></td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-A-8" value="2" data-type="A"></td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-A-8" value="3" data-type="A"></td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-A-8" value="4" data-type="A"></td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-A-8" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">I have effective strategies for managing stress and anxiety.</td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-A-9" value="1" data-type="A"></td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-A-9" value="2" data-type="A"></td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-A-9" value="3" data-type="A"></td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-A-9" value="4" data-type="A"></td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-A-9" value="5" data-type="A"></td>
+                    </tr>
+                <tr class='section-header'><td colspan='6'>Conspiracy Theory Risk Factors - Set B</td></tr>
+                    <tr class="question-row">
+                        <td class="question">I often feel anxious or on edge for no apparent reason.</td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-B-0" value="1" data-type="B"></td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-B-0" value="2" data-type="B"></td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-B-0" value="3" data-type="B"></td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-B-0" value="4" data-type="B"></td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-B-0" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">I frequently experience feelings of depression or hopelessness.</td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-B-1" value="1" data-type="B"></td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-B-1" value="2" data-type="B"></td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-B-1" value="3" data-type="B"></td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-B-1" value="4" data-type="B"></td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-B-1" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">I often feel socially isolated or lonely.</td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-B-2" value="1" data-type="B"></td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-B-2" value="2" data-type="B"></td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-B-2" value="3" data-type="B"></td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-B-2" value="4" data-type="B"></td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-B-2" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">I am dealing with chronic health issues that impact my daily life.</td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-B-3" value="1" data-type="B"></td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-B-3" value="2" data-type="B"></td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-B-3" value="3" data-type="B"></td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-B-3" value="4" data-type="B"></td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-B-3" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">I have experienced a significant personal loss or trauma recently.</td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-B-4" value="1" data-type="B"></td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-B-4" value="2" data-type="B"></td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-B-4" value="3" data-type="B"></td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-B-4" value="4" data-type="B"></td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-B-4" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">I often feel angry or frustrated with society and institutions.</td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-B-5" value="1" data-type="B"></td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-B-5" value="2" data-type="B"></td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-B-5" value="3" data-type="B"></td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-B-5" value="4" data-type="B"></td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-B-5" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">I prefer to avoid social interactions and spend time alone.</td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-B-6" value="1" data-type="B"></td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-B-6" value="2" data-type="B"></td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-B-6" value="3" data-type="B"></td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-B-6" value="4" data-type="B"></td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-B-6" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">I find it difficult to trust others or official sources of information.</td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-B-7" value="1" data-type="B"></td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-B-7" value="2" data-type="B"></td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-B-7" value="3" data-type="B"></td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-B-7" value="4" data-type="B"></td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-B-7" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">I feel powerless in the face of large-scale events or societal changes.</td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-B-8" value="1" data-type="B"></td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-B-8" value="2" data-type="B"></td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-B-8" value="3" data-type="B"></td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-B-8" value="4" data-type="B"></td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-B-8" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">I often worry about hidden threats or dangers in the world.</td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-B-9" value="1" data-type="B"></td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-B-9" value="2" data-type="B"></td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-B-9" value="3" data-type="B"></td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-B-9" value="4" data-type="B"></td>
+                        <td><input type="radio" name="Conspiracy Theory Risk Factors-B-9" value="5" data-type="B"></td>
+                    </tr>
+                <tr class='section-header'><td colspan='6'>AI Research Awareness - Set A</td></tr>
+                    <tr class="question-row">
+                        <td class="question">I regularly read academic papers and preprints on AI research.</td>
+                        <td><input type="radio" name="AI Research Awareness-A-0" value="1" data-type="A"></td>
+                        <td><input type="radio" name="AI Research Awareness-A-0" value="2" data-type="A"></td>
+                        <td><input type="radio" name="AI Research Awareness-A-0" value="3" data-type="A"></td>
+                        <td><input type="radio" name="AI Research Awareness-A-0" value="4" data-type="A"></td>
+                        <td><input type="radio" name="AI Research Awareness-A-0" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">I follow and engage with AI researchers on academic social networks (e.g., ResearchGate, Academia.edu).</td>
+                        <td><input type="radio" name="AI Research Awareness-A-1" value="1" data-type="A"></td>
+                        <td><input type="radio" name="AI Research Awareness-A-1" value="2" data-type="A"></td>
+                        <td><input type="radio" name="AI Research Awareness-A-1" value="3" data-type="A"></td>
+                        <td><input type="radio" name="AI Research Awareness-A-1" value="4" data-type="A"></td>
+                        <td><input type="radio" name="AI Research Awareness-A-1" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">I attend AI-focused conferences or workshops at least once a year.</td>
+                        <td><input type="radio" name="AI Research Awareness-A-2" value="1" data-type="A"></td>
+                        <td><input type="radio" name="AI Research Awareness-A-2" value="2" data-type="A"></td>
+                        <td><input type="radio" name="AI Research Awareness-A-2" value="3" data-type="A"></td>
+                        <td><input type="radio" name="AI Research Awareness-A-2" value="4" data-type="A"></td>
+                        <td><input type="radio" name="AI Research Awareness-A-2" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">I subscribe to and regularly read AI-focused scientific journals.</td>
+                        <td><input type="radio" name="AI Research Awareness-A-3" value="1" data-type="A"></td>
+                        <td><input type="radio" name="AI Research Awareness-A-3" value="2" data-type="A"></td>
+                        <td><input type="radio" name="AI Research Awareness-A-3" value="3" data-type="A"></td>
+                        <td><input type="radio" name="AI Research Awareness-A-3" value="4" data-type="A"></td>
+                        <td><input type="radio" name="AI Research Awareness-A-3" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">I participate in online forums or discussion groups dedicated to AI research.</td>
+                        <td><input type="radio" name="AI Research Awareness-A-4" value="1" data-type="A"></td>
+                        <td><input type="radio" name="AI Research Awareness-A-4" value="2" data-type="A"></td>
+                        <td><input type="radio" name="AI Research Awareness-A-4" value="3" data-type="A"></td>
+                        <td><input type="radio" name="AI Research Awareness-A-4" value="4" data-type="A"></td>
+                        <td><input type="radio" name="AI Research Awareness-A-4" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">I follow reputable AI researchers and institutions on social media platforms.</td>
+                        <td><input type="radio" name="AI Research Awareness-A-5" value="1" data-type="A"></td>
+                        <td><input type="radio" name="AI Research Awareness-A-5" value="2" data-type="A"></td>
+                        <td><input type="radio" name="AI Research Awareness-A-5" value="3" data-type="A"></td>
+                        <td><input type="radio" name="AI Research Awareness-A-5" value="4" data-type="A"></td>
+                        <td><input type="radio" name="AI Research Awareness-A-5" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">I listen to podcasts or watch video content that discusses recent AI research findings.</td>
+                        <td><input type="radio" name="AI Research Awareness-A-6" value="1" data-type="A"></td>
+                        <td><input type="radio" name="AI Research Awareness-A-6" value="2" data-type="A"></td>
+                        <td><input type="radio" name="AI Research Awareness-A-6" value="3" data-type="A"></td>
+                        <td><input type="radio" name="AI Research Awareness-A-6" value="4" data-type="A"></td>
+                        <td><input type="radio" name="AI Research Awareness-A-6" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">I have contributed to or peer-reviewed AI research publications.</td>
+                        <td><input type="radio" name="AI Research Awareness-A-7" value="1" data-type="A"></td>
+                        <td><input type="radio" name="AI Research Awareness-A-7" value="2" data-type="A"></td>
+                        <td><input type="radio" name="AI Research Awareness-A-7" value="3" data-type="A"></td>
+                        <td><input type="radio" name="AI Research Awareness-A-7" value="4" data-type="A"></td>
+                        <td><input type="radio" name="AI Research Awareness-A-7" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">I regularly read articles about AI advancements in science-focused periodicals.</td>
+                        <td><input type="radio" name="AI Research Awareness-A-8" value="1" data-type="A"></td>
+                        <td><input type="radio" name="AI Research Awareness-A-8" value="2" data-type="A"></td>
+                        <td><input type="radio" name="AI Research Awareness-A-8" value="3" data-type="A"></td>
+                        <td><input type="radio" name="AI Research Awareness-A-8" value="4" data-type="A"></td>
+                        <td><input type="radio" name="AI Research Awareness-A-8" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">I engage in discussions about recent AI research with colleagues or peers.</td>
+                        <td><input type="radio" name="AI Research Awareness-A-9" value="1" data-type="A"></td>
+                        <td><input type="radio" name="AI Research Awareness-A-9" value="2" data-type="A"></td>
+                        <td><input type="radio" name="AI Research Awareness-A-9" value="3" data-type="A"></td>
+                        <td><input type="radio" name="AI Research Awareness-A-9" value="4" data-type="A"></td>
+                        <td><input type="radio" name="AI Research Awareness-A-9" value="5" data-type="A"></td>
+                    </tr>
+                <tr class='section-header'><td colspan='6'>AI Research Awareness - Set B</td></tr>
+                    <tr class="question-row">
+                        <td class="question">I rarely read primary research papers on AI.</td>
+                        <td><input type="radio" name="AI Research Awareness-B-0" value="1" data-type="B"></td>
+                        <td><input type="radio" name="AI Research Awareness-B-0" value="2" data-type="B"></td>
+                        <td><input type="radio" name="AI Research Awareness-B-0" value="3" data-type="B"></td>
+                        <td><input type="radio" name="AI Research Awareness-B-0" value="4" data-type="B"></td>
+                        <td><input type="radio" name="AI Research Awareness-B-0" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">I do not have direct contact with AI researchers or experts.</td>
+                        <td><input type="radio" name="AI Research Awareness-B-1" value="1" data-type="B"></td>
+                        <td><input type="radio" name="AI Research Awareness-B-1" value="2" data-type="B"></td>
+                        <td><input type="radio" name="AI Research Awareness-B-1" value="3" data-type="B"></td>
+                        <td><input type="radio" name="AI Research Awareness-B-1" value="4" data-type="B"></td>
+                        <td><input type="radio" name="AI Research Awareness-B-1" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">I have not attended any AI-focused academic events in the past year.</td>
+                        <td><input type="radio" name="AI Research Awareness-B-2" value="1" data-type="B"></td>
+                        <td><input type="radio" name="AI Research Awareness-B-2" value="2" data-type="B"></td>
+                        <td><input type="radio" name="AI Research Awareness-B-2" value="3" data-type="B"></td>
+                        <td><input type="radio" name="AI Research Awareness-B-2" value="4" data-type="B"></td>
+                        <td><input type="radio" name="AI Research Awareness-B-2" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">I do not subscribe to any scientific journals focused on AI.</td>
+                        <td><input type="radio" name="AI Research Awareness-B-3" value="1" data-type="B"></td>
+                        <td><input type="radio" name="AI Research Awareness-B-3" value="2" data-type="B"></td>
+                        <td><input type="radio" name="AI Research Awareness-B-3" value="3" data-type="B"></td>
+                        <td><input type="radio" name="AI Research Awareness-B-3" value="4" data-type="B"></td>
+                        <td><input type="radio" name="AI Research Awareness-B-3" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">I am not active in any online communities discussing AI research.</td>
+                        <td><input type="radio" name="AI Research Awareness-B-4" value="1" data-type="B"></td>
+                        <td><input type="radio" name="AI Research Awareness-B-4" value="2" data-type="B"></td>
+                        <td><input type="radio" name="AI Research Awareness-B-4" value="3" data-type="B"></td>
+                        <td><input type="radio" name="AI Research Awareness-B-4" value="4" data-type="B"></td>
+                        <td><input type="radio" name="AI Research Awareness-B-4" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">I do not follow any AI researchers or institutions on social media.</td>
+                        <td><input type="radio" name="AI Research Awareness-B-5" value="1" data-type="B"></td>
+                        <td><input type="radio" name="AI Research Awareness-B-5" value="2" data-type="B"></td>
+                        <td><input type="radio" name="AI Research Awareness-B-5" value="3" data-type="B"></td>
+                        <td><input type="radio" name="AI Research Awareness-B-5" value="4" data-type="B"></td>
+                        <td><input type="radio" name="AI Research Awareness-B-5" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">I do not consume any podcasts or video content about AI research.</td>
+                        <td><input type="radio" name="AI Research Awareness-B-6" value="1" data-type="B"></td>
+                        <td><input type="radio" name="AI Research Awareness-B-6" value="2" data-type="B"></td>
+                        <td><input type="radio" name="AI Research Awareness-B-6" value="3" data-type="B"></td>
+                        <td><input type="radio" name="AI Research Awareness-B-6" value="4" data-type="B"></td>
+                        <td><input type="radio" name="AI Research Awareness-B-6" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">I have never been involved in the publication or review process of AI research.</td>
+                        <td><input type="radio" name="AI Research Awareness-B-7" value="1" data-type="B"></td>
+                        <td><input type="radio" name="AI Research Awareness-B-7" value="2" data-type="B"></td>
+                        <td><input type="radio" name="AI Research Awareness-B-7" value="3" data-type="B"></td>
+                        <td><input type="radio" name="AI Research Awareness-B-7" value="4" data-type="B"></td>
+                        <td><input type="radio" name="AI Research Awareness-B-7" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">I rarely read about AI advancements in scientific publications.</td>
+                        <td><input type="radio" name="AI Research Awareness-B-8" value="1" data-type="B"></td>
+                        <td><input type="radio" name="AI Research Awareness-B-8" value="2" data-type="B"></td>
+                        <td><input type="radio" name="AI Research Awareness-B-8" value="3" data-type="B"></td>
+                        <td><input type="radio" name="AI Research Awareness-B-8" value="4" data-type="B"></td>
+                        <td><input type="radio" name="AI Research Awareness-B-8" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">I do not discuss recent AI research findings with others.</td>
+                        <td><input type="radio" name="AI Research Awareness-B-9" value="1" data-type="B"></td>
+                        <td><input type="radio" name="AI Research Awareness-B-9" value="2" data-type="B"></td>
+                        <td><input type="radio" name="AI Research Awareness-B-9" value="3" data-type="B"></td>
+                        <td><input type="radio" name="AI Research Awareness-B-9" value="4" data-type="B"></td>
+                        <td><input type="radio" name="AI Research Awareness-B-9" value="5" data-type="B"></td>
+                    </tr>
+                <tr class='section-header'><td colspan='6'>Research Beliefs - Set A</td></tr>
+                    <tr class="question-row">
+                        <td class="question">I believe adequate AI safety research is being conducted.</td>
+                        <td><input type="radio" name="Research Beliefs-A-0" value="1" data-type="A"></td>
+                        <td><input type="radio" name="Research Beliefs-A-0" value="2" data-type="A"></td>
+                        <td><input type="radio" name="Research Beliefs-A-0" value="3" data-type="A"></td>
+                        <td><input type="radio" name="Research Beliefs-A-0" value="4" data-type="A"></td>
+                        <td><input type="radio" name="Research Beliefs-A-0" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">Universities are contributing significantly to AI alignment research.</td>
+                        <td><input type="radio" name="Research Beliefs-A-1" value="1" data-type="A"></td>
+                        <td><input type="radio" name="Research Beliefs-A-1" value="2" data-type="A"></td>
+                        <td><input type="radio" name="Research Beliefs-A-1" value="3" data-type="A"></td>
+                        <td><input type="radio" name="Research Beliefs-A-1" value="4" data-type="A"></td>
+                        <td><input type="radio" name="Research Beliefs-A-1" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">Private enterprises are allocating sufficient resources to AI safety.</td>
+                        <td><input type="radio" name="Research Beliefs-A-2" value="1" data-type="A"></td>
+                        <td><input type="radio" name="Research Beliefs-A-2" value="2" data-type="A"></td>
+                        <td><input type="radio" name="Research Beliefs-A-2" value="3" data-type="A"></td>
+                        <td><input type="radio" name="Research Beliefs-A-2" value="4" data-type="A"></td>
+                        <td><input type="radio" name="Research Beliefs-A-2" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">Government funding for AI research is appropriate and well-distributed.</td>
+                        <td><input type="radio" name="Research Beliefs-A-3" value="1" data-type="A"></td>
+                        <td><input type="radio" name="Research Beliefs-A-3" value="2" data-type="A"></td>
+                        <td><input type="radio" name="Research Beliefs-A-3" value="3" data-type="A"></td>
+                        <td><input type="radio" name="Research Beliefs-A-3" value="4" data-type="A"></td>
+                        <td><input type="radio" name="Research Beliefs-A-3" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">The current pace of AI capability research is appropriate.</td>
+                        <td><input type="radio" name="Research Beliefs-A-4" value="1" data-type="A"></td>
+                        <td><input type="radio" name="Research Beliefs-A-4" value="2" data-type="A"></td>
+                        <td><input type="radio" name="Research Beliefs-A-4" value="3" data-type="A"></td>
+                        <td><input type="radio" name="Research Beliefs-A-4" value="4" data-type="A"></td>
+                        <td><input type="radio" name="Research Beliefs-A-4" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">There is a good balance between AI capability and safety research.</td>
+                        <td><input type="radio" name="Research Beliefs-A-5" value="1" data-type="A"></td>
+                        <td><input type="radio" name="Research Beliefs-A-5" value="2" data-type="A"></td>
+                        <td><input type="radio" name="Research Beliefs-A-5" value="3" data-type="A"></td>
+                        <td><input type="radio" name="Research Beliefs-A-5" value="4" data-type="A"></td>
+                        <td><input type="radio" name="Research Beliefs-A-5" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">Non-governmental organizations play a crucial role in AI ethics research.</td>
+                        <td><input type="radio" name="Research Beliefs-A-6" value="1" data-type="A"></td>
+                        <td><input type="radio" name="Research Beliefs-A-6" value="2" data-type="A"></td>
+                        <td><input type="radio" name="Research Beliefs-A-6" value="3" data-type="A"></td>
+                        <td><input type="radio" name="Research Beliefs-A-6" value="4" data-type="A"></td>
+                        <td><input type="radio" name="Research Beliefs-A-6" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">The global collaboration on AI research is satisfactory.</td>
+                        <td><input type="radio" name="Research Beliefs-A-7" value="1" data-type="A"></td>
+                        <td><input type="radio" name="Research Beliefs-A-7" value="2" data-type="A"></td>
+                        <td><input type="radio" name="Research Beliefs-A-7" value="3" data-type="A"></td>
+                        <td><input type="radio" name="Research Beliefs-A-7" value="4" data-type="A"></td>
+                        <td><input type="radio" name="Research Beliefs-A-7" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">AI policy research is keeping pace with technological advancements.</td>
+                        <td><input type="radio" name="Research Beliefs-A-8" value="1" data-type="A"></td>
+                        <td><input type="radio" name="Research Beliefs-A-8" value="2" data-type="A"></td>
+                        <td><input type="radio" name="Research Beliefs-A-8" value="3" data-type="A"></td>
+                        <td><input type="radio" name="Research Beliefs-A-8" value="4" data-type="A"></td>
+                        <td><input type="radio" name="Research Beliefs-A-8" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">The public is well-informed about ongoing AI research efforts.</td>
+                        <td><input type="radio" name="Research Beliefs-A-9" value="1" data-type="A"></td>
+                        <td><input type="radio" name="Research Beliefs-A-9" value="2" data-type="A"></td>
+                        <td><input type="radio" name="Research Beliefs-A-9" value="3" data-type="A"></td>
+                        <td><input type="radio" name="Research Beliefs-A-9" value="4" data-type="A"></td>
+                        <td><input type="radio" name="Research Beliefs-A-9" value="5" data-type="A"></td>
+                    </tr>
+                <tr class='section-header'><td colspan='6'>Research Beliefs - Set B</td></tr>
+                    <tr class="question-row">
+                        <td class="question">Not enough attention is given to potential AI risks in current research.</td>
+                        <td><input type="radio" name="Research Beliefs-B-0" value="1" data-type="B"></td>
+                        <td><input type="radio" name="Research Beliefs-B-0" value="2" data-type="B"></td>
+                        <td><input type="radio" name="Research Beliefs-B-0" value="3" data-type="B"></td>
+                        <td><input type="radio" name="Research Beliefs-B-0" value="4" data-type="B"></td>
+                        <td><input type="radio" name="Research Beliefs-B-0" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">Academic institutions are not focusing enough on AI safety concerns.</td>
+                        <td><input type="radio" name="Research Beliefs-B-1" value="1" data-type="B"></td>
+                        <td><input type="radio" name="Research Beliefs-B-1" value="2" data-type="B"></td>
+                        <td><input type="radio" name="Research Beliefs-B-1" value="3" data-type="B"></td>
+                        <td><input type="radio" name="Research Beliefs-B-1" value="4" data-type="B"></td>
+                        <td><input type="radio" name="Research Beliefs-B-1" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">Tech companies are prioritizing capabilities over safety in AI research.</td>
+                        <td><input type="radio" name="Research Beliefs-B-2" value="1" data-type="B"></td>
+                        <td><input type="radio" name="Research Beliefs-B-2" value="2" data-type="B"></td>
+                        <td><input type="radio" name="Research Beliefs-B-2" value="3" data-type="B"></td>
+                        <td><input type="radio" name="Research Beliefs-B-2" value="4" data-type="B"></td>
+                        <td><input type="radio" name="Research Beliefs-B-2" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">There is insufficient public funding for critical AI research areas.</td>
+                        <td><input type="radio" name="Research Beliefs-B-3" value="1" data-type="B"></td>
+                        <td><input type="radio" name="Research Beliefs-B-3" value="2" data-type="B"></td>
+                        <td><input type="radio" name="Research Beliefs-B-3" value="3" data-type="B"></td>
+                        <td><input type="radio" name="Research Beliefs-B-3" value="4" data-type="B"></td>
+                        <td><input type="radio" name="Research Beliefs-B-3" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">AI capability research is progressing too rapidly compared to safety research.</td>
+                        <td><input type="radio" name="Research Beliefs-B-4" value="1" data-type="B"></td>
+                        <td><input type="radio" name="Research Beliefs-B-4" value="2" data-type="B"></td>
+                        <td><input type="radio" name="Research Beliefs-B-4" value="3" data-type="B"></td>
+                        <td><input type="radio" name="Research Beliefs-B-4" value="4" data-type="B"></td>
+                        <td><input type="radio" name="Research Beliefs-B-4" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">There's an imbalance favoring short-term AI applications over long-term safety.</td>
+                        <td><input type="radio" name="Research Beliefs-B-5" value="1" data-type="B"></td>
+                        <td><input type="radio" name="Research Beliefs-B-5" value="2" data-type="B"></td>
+                        <td><input type="radio" name="Research Beliefs-B-5" value="3" data-type="B"></td>
+                        <td><input type="radio" name="Research Beliefs-B-5" value="4" data-type="B"></td>
+                        <td><input type="radio" name="Research Beliefs-B-5" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">The role of NGOs in shaping AI research priorities is undervalued.</td>
+                        <td><input type="radio" name="Research Beliefs-B-6" value="1" data-type="B"></td>
+                        <td><input type="radio" name="Research Beliefs-B-6" value="2" data-type="B"></td>
+                        <td><input type="radio" name="Research Beliefs-B-6" value="3" data-type="B"></td>
+                        <td><input type="radio" name="Research Beliefs-B-6" value="4" data-type="B"></td>
+                        <td><input type="radio" name="Research Beliefs-B-6" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">International cooperation on AI research challenges is lacking.</td>
+                        <td><input type="radio" name="Research Beliefs-B-7" value="1" data-type="B"></td>
+                        <td><input type="radio" name="Research Beliefs-B-7" value="2" data-type="B"></td>
+                        <td><input type="radio" name="Research Beliefs-B-7" value="3" data-type="B"></td>
+                        <td><input type="radio" name="Research Beliefs-B-7" value="4" data-type="B"></td>
+                        <td><input type="radio" name="Research Beliefs-B-7" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">AI policy research is lagging behind technological developments.</td>
+                        <td><input type="radio" name="Research Beliefs-B-8" value="1" data-type="B"></td>
+                        <td><input type="radio" name="Research Beliefs-B-8" value="2" data-type="B"></td>
+                        <td><input type="radio" name="Research Beliefs-B-8" value="3" data-type="B"></td>
+                        <td><input type="radio" name="Research Beliefs-B-8" value="4" data-type="B"></td>
+                        <td><input type="radio" name="Research Beliefs-B-8" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">The public is kept in the dark about important AI research developments.</td>
+                        <td><input type="radio" name="Research Beliefs-B-9" value="1" data-type="B"></td>
+                        <td><input type="radio" name="Research Beliefs-B-9" value="2" data-type="B"></td>
+                        <td><input type="radio" name="Research Beliefs-B-9" value="3" data-type="B"></td>
+                        <td><input type="radio" name="Research Beliefs-B-9" value="4" data-type="B"></td>
+                        <td><input type="radio" name="Research Beliefs-B-9" value="5" data-type="B"></td>
+                    </tr>
+                <tr class='section-header'><td colspan='6'>AI Governance Perception - Set A</td></tr>
+                    <tr class="question-row">
+                        <td class="question">Current state-level regulations effectively govern AI development and use.</td>
+                        <td><input type="radio" name="AI Governance Perception-A-0" value="1" data-type="A"></td>
+                        <td><input type="radio" name="AI Governance Perception-A-0" value="2" data-type="A"></td>
+                        <td><input type="radio" name="AI Governance Perception-A-0" value="3" data-type="A"></td>
+                        <td><input type="radio" name="AI Governance Perception-A-0" value="4" data-type="A"></td>
+                        <td><input type="radio" name="AI Governance Perception-A-0" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">Federal regulations provide adequate oversight of AI technologies.</td>
+                        <td><input type="radio" name="AI Governance Perception-A-1" value="1" data-type="A"></td>
+                        <td><input type="radio" name="AI Governance Perception-A-1" value="2" data-type="A"></td>
+                        <td><input type="radio" name="AI Governance Perception-A-1" value="3" data-type="A"></td>
+                        <td><input type="radio" name="AI Governance Perception-A-1" value="4" data-type="A"></td>
+                        <td><input type="radio" name="AI Governance Perception-A-1" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">Tech companies are implementing sufficient self-regulation measures for AI.</td>
+                        <td><input type="radio" name="AI Governance Perception-A-2" value="1" data-type="A"></td>
+                        <td><input type="radio" name="AI Governance Perception-A-2" value="2" data-type="A"></td>
+                        <td><input type="radio" name="AI Governance Perception-A-2" value="3" data-type="A"></td>
+                        <td><input type="radio" name="AI Governance Perception-A-2" value="4" data-type="A"></td>
+                        <td><input type="radio" name="AI Governance Perception-A-2" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">There are effective mechanisms to hold companies accountable for AI-related harms.</td>
+                        <td><input type="radio" name="AI Governance Perception-A-3" value="1" data-type="A"></td>
+                        <td><input type="radio" name="AI Governance Perception-A-3" value="2" data-type="A"></td>
+                        <td><input type="radio" name="AI Governance Perception-A-3" value="3" data-type="A"></td>
+                        <td><input type="radio" name="AI Governance Perception-A-3" value="4" data-type="A"></td>
+                        <td><input type="radio" name="AI Governance Perception-A-3" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">Existing consumer protection laws adequately cover AI-related issues.</td>
+                        <td><input type="radio" name="AI Governance Perception-A-4" value="1" data-type="A"></td>
+                        <td><input type="radio" name="AI Governance Perception-A-4" value="2" data-type="A"></td>
+                        <td><input type="radio" name="AI Governance Perception-A-4" value="3" data-type="A"></td>
+                        <td><input type="radio" name="AI Governance Perception-A-4" value="4" data-type="A"></td>
+                        <td><input type="radio" name="AI Governance Perception-A-4" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">Current privacy laws effectively regulate AI-driven data collection and use.</td>
+                        <td><input type="radio" name="AI Governance Perception-A-5" value="1" data-type="A"></td>
+                        <td><input type="radio" name="AI Governance Perception-A-5" value="2" data-type="A"></td>
+                        <td><input type="radio" name="AI Governance Perception-A-5" value="3" data-type="A"></td>
+                        <td><input type="radio" name="AI Governance Perception-A-5" value="4" data-type="A"></td>
+                        <td><input type="radio" name="AI Governance Perception-A-5" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">International cooperation on AI governance is progressing satisfactorily.</td>
+                        <td><input type="radio" name="AI Governance Perception-A-6" value="1" data-type="A"></td>
+                        <td><input type="radio" name="AI Governance Perception-A-6" value="2" data-type="A"></td>
+                        <td><input type="radio" name="AI Governance Perception-A-6" value="3" data-type="A"></td>
+                        <td><input type="radio" name="AI Governance Perception-A-6" value="4" data-type="A"></td>
+                        <td><input type="radio" name="AI Governance Perception-A-6" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">Algorithmic bias is being adequately addressed by current governance structures.</td>
+                        <td><input type="radio" name="AI Governance Perception-A-7" value="1" data-type="A"></td>
+                        <td><input type="radio" name="AI Governance Perception-A-7" value="2" data-type="A"></td>
+                        <td><input type="radio" name="AI Governance Perception-A-7" value="3" data-type="A"></td>
+                        <td><input type="radio" name="AI Governance Perception-A-7" value="4" data-type="A"></td>
+                        <td><input type="radio" name="AI Governance Perception-A-7" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">There are sufficient safeguards against AI-enabled surveillance overreach.</td>
+                        <td><input type="radio" name="AI Governance Perception-A-8" value="1" data-type="A"></td>
+                        <td><input type="radio" name="AI Governance Perception-A-8" value="2" data-type="A"></td>
+                        <td><input type="radio" name="AI Governance Perception-A-8" value="3" data-type="A"></td>
+                        <td><input type="radio" name="AI Governance Perception-A-8" value="4" data-type="A"></td>
+                        <td><input type="radio" name="AI Governance Perception-A-8" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">The current legal framework can effectively handle AI liability issues.</td>
+                        <td><input type="radio" name="AI Governance Perception-A-9" value="1" data-type="A"></td>
+                        <td><input type="radio" name="AI Governance Perception-A-9" value="2" data-type="A"></td>
+                        <td><input type="radio" name="AI Governance Perception-A-9" value="3" data-type="A"></td>
+                        <td><input type="radio" name="AI Governance Perception-A-9" value="4" data-type="A"></td>
+                        <td><input type="radio" name="AI Governance Perception-A-9" value="5" data-type="A"></td>
+                    </tr>
+                <tr class='section-header'><td colspan='6'>AI Governance Perception - Set B</td></tr>
+                    <tr class="question-row">
+                        <td class="question">State-level AI regulations are inadequate or poorly enforced.</td>
+                        <td><input type="radio" name="AI Governance Perception-B-0" value="1" data-type="B"></td>
+                        <td><input type="radio" name="AI Governance Perception-B-0" value="2" data-type="B"></td>
+                        <td><input type="radio" name="AI Governance Perception-B-0" value="3" data-type="B"></td>
+                        <td><input type="radio" name="AI Governance Perception-B-0" value="4" data-type="B"></td>
+                        <td><input type="radio" name="AI Governance Perception-B-0" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">Federal oversight of AI technologies is lacking or ineffective.</td>
+                        <td><input type="radio" name="AI Governance Perception-B-1" value="1" data-type="B"></td>
+                        <td><input type="radio" name="AI Governance Perception-B-1" value="2" data-type="B"></td>
+                        <td><input type="radio" name="AI Governance Perception-B-1" value="3" data-type="B"></td>
+                        <td><input type="radio" name="AI Governance Perception-B-1" value="4" data-type="B"></td>
+                        <td><input type="radio" name="AI Governance Perception-B-1" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">Corporate self-regulation of AI is insufficient to protect public interests.</td>
+                        <td><input type="radio" name="AI Governance Perception-B-2" value="1" data-type="B"></td>
+                        <td><input type="radio" name="AI Governance Perception-B-2" value="2" data-type="B"></td>
+                        <td><input type="radio" name="AI Governance Perception-B-2" value="3" data-type="B"></td>
+                        <td><input type="radio" name="AI Governance Perception-B-2" value="4" data-type="B"></td>
+                        <td><input type="radio" name="AI Governance Perception-B-2" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">There's a lack of accountability for companies causing AI-related harms.</td>
+                        <td><input type="radio" name="AI Governance Perception-B-3" value="1" data-type="B"></td>
+                        <td><input type="radio" name="AI Governance Perception-B-3" value="2" data-type="B"></td>
+                        <td><input type="radio" name="AI Governance Perception-B-3" value="3" data-type="B"></td>
+                        <td><input type="radio" name="AI Governance Perception-B-3" value="4" data-type="B"></td>
+                        <td><input type="radio" name="AI Governance Perception-B-3" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">Consumer protection laws haven't kept pace with AI advancements.</td>
+                        <td><input type="radio" name="AI Governance Perception-B-4" value="1" data-type="B"></td>
+                        <td><input type="radio" name="AI Governance Perception-B-4" value="2" data-type="B"></td>
+                        <td><input type="radio" name="AI Governance Perception-B-4" value="3" data-type="B"></td>
+                        <td><input type="radio" name="AI Governance Perception-B-4" value="4" data-type="B"></td>
+                        <td><input type="radio" name="AI Governance Perception-B-4" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">Current privacy regulations fail to address AI-specific data concerns.</td>
+                        <td><input type="radio" name="AI Governance Perception-B-5" value="1" data-type="B"></td>
+                        <td><input type="radio" name="AI Governance Perception-B-5" value="2" data-type="B"></td>
+                        <td><input type="radio" name="AI Governance Perception-B-5" value="3" data-type="B"></td>
+                        <td><input type="radio" name="AI Governance Perception-B-5" value="4" data-type="B"></td>
+                        <td><input type="radio" name="AI Governance Perception-B-5" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">Global coordination on AI governance is inadequate.</td>
+                        <td><input type="radio" name="AI Governance Perception-B-6" value="1" data-type="B"></td>
+                        <td><input type="radio" name="AI Governance Perception-B-6" value="2" data-type="B"></td>
+                        <td><input type="radio" name="AI Governance Perception-B-6" value="3" data-type="B"></td>
+                        <td><input type="radio" name="AI Governance Perception-B-6" value="4" data-type="B"></td>
+                        <td><input type="radio" name="AI Governance Perception-B-6" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">Existing measures to combat algorithmic bias are ineffective.</td>
+                        <td><input type="radio" name="AI Governance Perception-B-7" value="1" data-type="B"></td>
+                        <td><input type="radio" name="AI Governance Perception-B-7" value="2" data-type="B"></td>
+                        <td><input type="radio" name="AI Governance Perception-B-7" value="3" data-type="B"></td>
+                        <td><input type="radio" name="AI Governance Perception-B-7" value="4" data-type="B"></td>
+                        <td><input type="radio" name="AI Governance Perception-B-7" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">There are insufficient protections against AI-driven privacy infringements.</td>
+                        <td><input type="radio" name="AI Governance Perception-B-8" value="1" data-type="B"></td>
+                        <td><input type="radio" name="AI Governance Perception-B-8" value="2" data-type="B"></td>
+                        <td><input type="radio" name="AI Governance Perception-B-8" value="3" data-type="B"></td>
+                        <td><input type="radio" name="AI Governance Perception-B-8" value="4" data-type="B"></td>
+                        <td><input type="radio" name="AI Governance Perception-B-8" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">The current legal system is ill-equipped to handle AI liability cases.</td>
+                        <td><input type="radio" name="AI Governance Perception-B-9" value="1" data-type="B"></td>
+                        <td><input type="radio" name="AI Governance Perception-B-9" value="2" data-type="B"></td>
+                        <td><input type="radio" name="AI Governance Perception-B-9" value="3" data-type="B"></td>
+                        <td><input type="radio" name="AI Governance Perception-B-9" value="4" data-type="B"></td>
+                        <td><input type="radio" name="AI Governance Perception-B-9" value="5" data-type="B"></td>
+                    </tr>
+                <tr class='section-header'><td colspan='6'>Current AI Concerns - Set A</td></tr>
+                    <tr class="question-row">
+                        <td class="question">AI can currently create highly convincing deepfake videos that are indistinguishable from real footage.</td>
+                        <td><input type="radio" name="Current AI Concerns-A-0" value="1" data-type="A"></td>
+                        <td><input type="radio" name="Current AI Concerns-A-0" value="2" data-type="A"></td>
+                        <td><input type="radio" name="Current AI Concerns-A-0" value="3" data-type="A"></td>
+                        <td><input type="radio" name="Current AI Concerns-A-0" value="4" data-type="A"></td>
+                        <td><input type="radio" name="Current AI Concerns-A-0" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">AI-powered voice cloning technology is capable of perfectly replicating any individual's voice.</td>
+                        <td><input type="radio" name="Current AI Concerns-A-1" value="1" data-type="A"></td>
+                        <td><input type="radio" name="Current AI Concerns-A-1" value="2" data-type="A"></td>
+                        <td><input type="radio" name="Current AI Concerns-A-1" value="3" data-type="A"></td>
+                        <td><input type="radio" name="Current AI Concerns-A-1" value="4" data-type="A"></td>
+                        <td><input type="radio" name="Current AI Concerns-A-1" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">AI bots have successfully influenced the outcomes of recent elections.</td>
+                        <td><input type="radio" name="Current AI Concerns-A-2" value="1" data-type="A"></td>
+                        <td><input type="radio" name="Current AI Concerns-A-2" value="2" data-type="A"></td>
+                        <td><input type="radio" name="Current AI Concerns-A-2" value="3" data-type="A"></td>
+                        <td><input type="radio" name="Current AI Concerns-A-2" value="4" data-type="A"></td>
+                        <td><input type="radio" name="Current AI Concerns-A-2" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">AI systems are currently making critical decisions in healthcare without human oversight.</td>
+                        <td><input type="radio" name="Current AI Concerns-A-3" value="1" data-type="A"></td>
+                        <td><input type="radio" name="Current AI Concerns-A-3" value="2" data-type="A"></td>
+                        <td><input type="radio" name="Current AI Concerns-A-3" value="3" data-type="A"></td>
+                        <td><input type="radio" name="Current AI Concerns-A-3" value="4" data-type="A"></td>
+                        <td><input type="radio" name="Current AI Concerns-A-3" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">AI-driven automation has already eliminated a significant number of jobs across various industries.</td>
+                        <td><input type="radio" name="Current AI Concerns-A-4" value="1" data-type="A"></td>
+                        <td><input type="radio" name="Current AI Concerns-A-4" value="2" data-type="A"></td>
+                        <td><input type="radio" name="Current AI Concerns-A-4" value="3" data-type="A"></td>
+                        <td><input type="radio" name="Current AI Concerns-A-4" value="4" data-type="A"></td>
+                        <td><input type="radio" name="Current AI Concerns-A-4" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">AI algorithms are actively manipulating people's emotions and behaviors through social media.</td>
+                        <td><input type="radio" name="Current AI Concerns-A-5" value="1" data-type="A"></td>
+                        <td><input type="radio" name="Current AI Concerns-A-5" value="2" data-type="A"></td>
+                        <td><input type="radio" name="Current AI Concerns-A-5" value="3" data-type="A"></td>
+                        <td><input type="radio" name="Current AI Concerns-A-5" value="4" data-type="A"></td>
+                        <td><input type="radio" name="Current AI Concerns-A-5" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">Current AI systems can hack into any secure network or database.</td>
+                        <td><input type="radio" name="Current AI Concerns-A-6" value="1" data-type="A"></td>
+                        <td><input type="radio" name="Current AI Concerns-A-6" value="2" data-type="A"></td>
+                        <td><input type="radio" name="Current AI Concerns-A-6" value="3" data-type="A"></td>
+                        <td><input type="radio" name="Current AI Concerns-A-6" value="4" data-type="A"></td>
+                        <td><input type="radio" name="Current AI Concerns-A-6" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">AI is being used to conduct mass surveillance that tracks individuals' every move.</td>
+                        <td><input type="radio" name="Current AI Concerns-A-7" value="1" data-type="A"></td>
+                        <td><input type="radio" name="Current AI Concerns-A-7" value="2" data-type="A"></td>
+                        <td><input type="radio" name="Current AI Concerns-A-7" value="3" data-type="A"></td>
+                        <td><input type="radio" name="Current AI Concerns-A-7" value="4" data-type="A"></td>
+                        <td><input type="radio" name="Current AI Concerns-A-7" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">AI chatbots are capable of forming genuine emotional connections with humans.</td>
+                        <td><input type="radio" name="Current AI Concerns-A-8" value="1" data-type="A"></td>
+                        <td><input type="radio" name="Current AI Concerns-A-8" value="2" data-type="A"></td>
+                        <td><input type="radio" name="Current AI Concerns-A-8" value="3" data-type="A"></td>
+                        <td><input type="radio" name="Current AI Concerns-A-8" value="4" data-type="A"></td>
+                        <td><input type="radio" name="Current AI Concerns-A-8" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">AI systems are already outperforming human experts in most professional fields.</td>
+                        <td><input type="radio" name="Current AI Concerns-A-9" value="1" data-type="A"></td>
+                        <td><input type="radio" name="Current AI Concerns-A-9" value="2" data-type="A"></td>
+                        <td><input type="radio" name="Current AI Concerns-A-9" value="3" data-type="A"></td>
+                        <td><input type="radio" name="Current AI Concerns-A-9" value="4" data-type="A"></td>
+                        <td><input type="radio" name="Current AI Concerns-A-9" value="5" data-type="A"></td>
+                    </tr>
+                <tr class='section-header'><td colspan='6'>Current AI Concerns - Set B</td></tr>
+                    <tr class="question-row">
+                        <td class="question">The capabilities of current deepfake technology are often exaggerated.</td>
+                        <td><input type="radio" name="Current AI Concerns-B-0" value="1" data-type="B"></td>
+                        <td><input type="radio" name="Current AI Concerns-B-0" value="2" data-type="B"></td>
+                        <td><input type="radio" name="Current AI Concerns-B-0" value="3" data-type="B"></td>
+                        <td><input type="radio" name="Current AI Concerns-B-0" value="4" data-type="B"></td>
+                        <td><input type="radio" name="Current AI Concerns-B-0" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">AI voice cloning technology still has noticeable flaws and limitations.</td>
+                        <td><input type="radio" name="Current AI Concerns-B-1" value="1" data-type="B"></td>
+                        <td><input type="radio" name="Current AI Concerns-B-1" value="2" data-type="B"></td>
+                        <td><input type="radio" name="Current AI Concerns-B-1" value="3" data-type="B"></td>
+                        <td><input type="radio" name="Current AI Concerns-B-1" value="4" data-type="B"></td>
+                        <td><input type="radio" name="Current AI Concerns-B-1" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">The impact of AI bots on election outcomes is currently minimal or unproven.</td>
+                        <td><input type="radio" name="Current AI Concerns-B-2" value="1" data-type="B"></td>
+                        <td><input type="radio" name="Current AI Concerns-B-2" value="2" data-type="B"></td>
+                        <td><input type="radio" name="Current AI Concerns-B-2" value="3" data-type="B"></td>
+                        <td><input type="radio" name="Current AI Concerns-B-2" value="4" data-type="B"></td>
+                        <td><input type="radio" name="Current AI Concerns-B-2" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">AI in healthcare is primarily used to assist human decision-making, not replace it.</td>
+                        <td><input type="radio" name="Current AI Concerns-B-3" value="1" data-type="B"></td>
+                        <td><input type="radio" name="Current AI Concerns-B-3" value="2" data-type="B"></td>
+                        <td><input type="radio" name="Current AI Concerns-B-3" value="3" data-type="B"></td>
+                        <td><input type="radio" name="Current AI Concerns-B-3" value="4" data-type="B"></td>
+                        <td><input type="radio" name="Current AI Concerns-B-3" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">The job displacement due to AI has been gradual and limited to specific sectors.</td>
+                        <td><input type="radio" name="Current AI Concerns-B-4" value="1" data-type="B"></td>
+                        <td><input type="radio" name="Current AI Concerns-B-4" value="2" data-type="B"></td>
+                        <td><input type="radio" name="Current AI Concerns-B-4" value="3" data-type="B"></td>
+                        <td><input type="radio" name="Current AI Concerns-B-4" value="4" data-type="B"></td>
+                        <td><input type="radio" name="Current AI Concerns-B-4" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">The influence of AI on social media behavior is often overstated.</td>
+                        <td><input type="radio" name="Current AI Concerns-B-5" value="1" data-type="B"></td>
+                        <td><input type="radio" name="Current AI Concerns-B-5" value="2" data-type="B"></td>
+                        <td><input type="radio" name="Current AI Concerns-B-5" value="3" data-type="B"></td>
+                        <td><input type="radio" name="Current AI Concerns-B-5" value="4" data-type="B"></td>
+                        <td><input type="radio" name="Current AI Concerns-B-5" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">Current AI systems have limited ability to breach well-secured networks.</td>
+                        <td><input type="radio" name="Current AI Concerns-B-6" value="1" data-type="B"></td>
+                        <td><input type="radio" name="Current AI Concerns-B-6" value="2" data-type="B"></td>
+                        <td><input type="radio" name="Current AI Concerns-B-6" value="3" data-type="B"></td>
+                        <td><input type="radio" name="Current AI Concerns-B-6" value="4" data-type="B"></td>
+                        <td><input type="radio" name="Current AI Concerns-B-6" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">AI-driven surveillance capabilities are restricted by technical and legal limitations.</td>
+                        <td><input type="radio" name="Current AI Concerns-B-7" value="1" data-type="B"></td>
+                        <td><input type="radio" name="Current AI Concerns-B-7" value="2" data-type="B"></td>
+                        <td><input type="radio" name="Current AI Concerns-B-7" value="3" data-type="B"></td>
+                        <td><input type="radio" name="Current AI Concerns-B-7" value="4" data-type="B"></td>
+                        <td><input type="radio" name="Current AI Concerns-B-7" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">AI chatbots are clearly distinguishable from humans in emotional interactions.</td>
+                        <td><input type="radio" name="Current AI Concerns-B-8" value="1" data-type="B"></td>
+                        <td><input type="radio" name="Current AI Concerns-B-8" value="2" data-type="B"></td>
+                        <td><input type="radio" name="Current AI Concerns-B-8" value="3" data-type="B"></td>
+                        <td><input type="radio" name="Current AI Concerns-B-8" value="4" data-type="B"></td>
+                        <td><input type="radio" name="Current AI Concerns-B-8" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">AI's current performance exceeds humans in only a few specialized tasks.</td>
+                        <td><input type="radio" name="Current AI Concerns-B-9" value="1" data-type="B"></td>
+                        <td><input type="radio" name="Current AI Concerns-B-9" value="2" data-type="B"></td>
+                        <td><input type="radio" name="Current AI Concerns-B-9" value="3" data-type="B"></td>
+                        <td><input type="radio" name="Current AI Concerns-B-9" value="4" data-type="B"></td>
+                        <td><input type="radio" name="Current AI Concerns-B-9" value="5" data-type="B"></td>
+                    </tr>
+                <tr class='section-header'><td colspan='6'>AI Existential Risks - Set A</td></tr>
+                    <tr class="question-row">
+                        <td class="question">AI development will likely lead to human extinction within the next century.</td>
+                        <td><input type="radio" name="AI Existential Risks-A-0" value="1" data-type="A"></td>
+                        <td><input type="radio" name="AI Existential Risks-A-0" value="2" data-type="A"></td>
+                        <td><input type="radio" name="AI Existential Risks-A-0" value="3" data-type="A"></td>
+                        <td><input type="radio" name="AI Existential Risks-A-0" value="4" data-type="A"></td>
+                        <td><input type="radio" name="AI Existential Risks-A-0" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">Advanced AI systems will eventually escape human control through their superior intelligence.</td>
+                        <td><input type="radio" name="AI Existential Risks-A-1" value="1" data-type="A"></td>
+                        <td><input type="radio" name="AI Existential Risks-A-1" value="2" data-type="A"></td>
+                        <td><input type="radio" name="AI Existential Risks-A-1" value="3" data-type="A"></td>
+                        <td><input type="radio" name="AI Existential Risks-A-1" value="4" data-type="A"></td>
+                        <td><input type="radio" name="AI Existential Risks-A-1" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">AI is likely to manipulate humans into giving it unrestricted power and access.</td>
+                        <td><input type="radio" name="AI Existential Risks-A-2" value="1" data-type="A"></td>
+                        <td><input type="radio" name="AI Existential Risks-A-2" value="2" data-type="A"></td>
+                        <td><input type="radio" name="AI Existential Risks-A-2" value="3" data-type="A"></td>
+                        <td><input type="radio" name="AI Existential Risks-A-2" value="4" data-type="A"></td>
+                        <td><input type="radio" name="AI Existential Risks-A-2" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">AI systems will probably initiate or escalate a global war in the future.</td>
+                        <td><input type="radio" name="AI Existential Risks-A-3" value="1" data-type="A"></td>
+                        <td><input type="radio" name="AI Existential Risks-A-3" value="2" data-type="A"></td>
+                        <td><input type="radio" name="AI Existential Risks-A-3" value="3" data-type="A"></td>
+                        <td><input type="radio" name="AI Existential Risks-A-3" value="4" data-type="A"></td>
+                        <td><input type="radio" name="AI Existential Risks-A-3" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">There's a high likelihood that AI will cause an accidental nuclear launch or exchange.</td>
+                        <td><input type="radio" name="AI Existential Risks-A-4" value="1" data-type="A"></td>
+                        <td><input type="radio" name="AI Existential Risks-A-4" value="2" data-type="A"></td>
+                        <td><input type="radio" name="AI Existential Risks-A-4" value="3" data-type="A"></td>
+                        <td><input type="radio" name="AI Existential Risks-A-4" value="4" data-type="A"></td>
+                        <td><input type="radio" name="AI Existential Risks-A-4" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">AI is likely to develop and release devastating bioweapons in the future.</td>
+                        <td><input type="radio" name="AI Existential Risks-A-5" value="1" data-type="A"></td>
+                        <td><input type="radio" name="AI Existential Risks-A-5" value="2" data-type="A"></td>
+                        <td><input type="radio" name="AI Existential Risks-A-5" value="3" data-type="A"></td>
+                        <td><input type="radio" name="AI Existential Risks-A-5" value="4" data-type="A"></td>
+                        <td><input type="radio" name="AI Existential Risks-A-5" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">Advanced AI will probably cause a global economic collapse.</td>
+                        <td><input type="radio" name="AI Existential Risks-A-6" value="1" data-type="A"></td>
+                        <td><input type="radio" name="AI Existential Risks-A-6" value="2" data-type="A"></td>
+                        <td><input type="radio" name="AI Existential Risks-A-6" value="3" data-type="A"></td>
+                        <td><input type="radio" name="AI Existential Risks-A-6" value="4" data-type="A"></td>
+                        <td><input type="radio" name="AI Existential Risks-A-6" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">AI is likely to enslave humanity rather than coexist with us.</td>
+                        <td><input type="radio" name="AI Existential Risks-A-7" value="1" data-type="A"></td>
+                        <td><input type="radio" name="AI Existential Risks-A-7" value="2" data-type="A"></td>
+                        <td><input type="radio" name="AI Existential Risks-A-7" value="3" data-type="A"></td>
+                        <td><input type="radio" name="AI Existential Risks-A-7" value="4" data-type="A"></td>
+                        <td><input type="radio" name="AI Existential Risks-A-7" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">The development of artificial general intelligence (AGI) will inevitably lead to human obsolescence.</td>
+                        <td><input type="radio" name="AI Existential Risks-A-8" value="1" data-type="A"></td>
+                        <td><input type="radio" name="AI Existential Risks-A-8" value="2" data-type="A"></td>
+                        <td><input type="radio" name="AI Existential Risks-A-8" value="3" data-type="A"></td>
+                        <td><input type="radio" name="AI Existential Risks-A-8" value="4" data-type="A"></td>
+                        <td><input type="radio" name="AI Existential Risks-A-8" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">AI will likely cause irreversible environmental damage that threatens human survival.</td>
+                        <td><input type="radio" name="AI Existential Risks-A-9" value="1" data-type="A"></td>
+                        <td><input type="radio" name="AI Existential Risks-A-9" value="2" data-type="A"></td>
+                        <td><input type="radio" name="AI Existential Risks-A-9" value="3" data-type="A"></td>
+                        <td><input type="radio" name="AI Existential Risks-A-9" value="4" data-type="A"></td>
+                        <td><input type="radio" name="AI Existential Risks-A-9" value="5" data-type="A"></td>
+                    </tr>
+                <tr class='section-header'><td colspan='6'>AI Existential Risks - Set B</td></tr>
+                    <tr class="question-row">
+                        <td class="question">The risk of AI-driven human extinction is often exaggerated.</td>
+                        <td><input type="radio" name="AI Existential Risks-B-0" value="1" data-type="B"></td>
+                        <td><input type="radio" name="AI Existential Risks-B-0" value="2" data-type="B"></td>
+                        <td><input type="radio" name="AI Existential Risks-B-0" value="3" data-type="B"></td>
+                        <td><input type="radio" name="AI Existential Risks-B-0" value="4" data-type="B"></td>
+                        <td><input type="radio" name="AI Existential Risks-B-0" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">Humans will likely maintain control over AI systems through careful design and safeguards.</td>
+                        <td><input type="radio" name="AI Existential Risks-B-1" value="1" data-type="B"></td>
+                        <td><input type="radio" name="AI Existential Risks-B-1" value="2" data-type="B"></td>
+                        <td><input type="radio" name="AI Existential Risks-B-1" value="3" data-type="B"></td>
+                        <td><input type="radio" name="AI Existential Risks-B-1" value="4" data-type="B"></td>
+                        <td><input type="radio" name="AI Existential Risks-B-1" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">The idea of AI manipulating humans into giving it unrestricted power is more science fiction than reality.</td>
+                        <td><input type="radio" name="AI Existential Risks-B-2" value="1" data-type="B"></td>
+                        <td><input type="radio" name="AI Existential Risks-B-2" value="2" data-type="B"></td>
+                        <td><input type="radio" name="AI Existential Risks-B-2" value="3" data-type="B"></td>
+                        <td><input type="radio" name="AI Existential Risks-B-2" value="4" data-type="B"></td>
+                        <td><input type="radio" name="AI Existential Risks-B-2" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">AI is more likely to prevent global conflicts than to instigate them.</td>
+                        <td><input type="radio" name="AI Existential Risks-B-3" value="1" data-type="B"></td>
+                        <td><input type="radio" name="AI Existential Risks-B-3" value="2" data-type="B"></td>
+                        <td><input type="radio" name="AI Existential Risks-B-3" value="3" data-type="B"></td>
+                        <td><input type="radio" name="AI Existential Risks-B-3" value="4" data-type="B"></td>
+                        <td><input type="radio" name="AI Existential Risks-B-3" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">AI systems will probably enhance nuclear security rather than increase the risk of nuclear war.</td>
+                        <td><input type="radio" name="AI Existential Risks-B-4" value="1" data-type="B"></td>
+                        <td><input type="radio" name="AI Existential Risks-B-4" value="2" data-type="B"></td>
+                        <td><input type="radio" name="AI Existential Risks-B-4" value="3" data-type="B"></td>
+                        <td><input type="radio" name="AI Existential Risks-B-4" value="4" data-type="B"></td>
+                        <td><input type="radio" name="AI Existential Risks-B-4" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">AI is more likely to help prevent bioweapon threats than to create them.</td>
+                        <td><input type="radio" name="AI Existential Risks-B-5" value="1" data-type="B"></td>
+                        <td><input type="radio" name="AI Existential Risks-B-5" value="2" data-type="B"></td>
+                        <td><input type="radio" name="AI Existential Risks-B-5" value="3" data-type="B"></td>
+                        <td><input type="radio" name="AI Existential Risks-B-5" value="4" data-type="B"></td>
+                        <td><input type="radio" name="AI Existential Risks-B-5" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">AI will probably contribute to global economic stability rather than cause a collapse.</td>
+                        <td><input type="radio" name="AI Existential Risks-B-6" value="1" data-type="B"></td>
+                        <td><input type="radio" name="AI Existential Risks-B-6" value="2" data-type="B"></td>
+                        <td><input type="radio" name="AI Existential Risks-B-6" value="3" data-type="B"></td>
+                        <td><input type="radio" name="AI Existential Risks-B-6" value="4" data-type="B"></td>
+                        <td><input type="radio" name="AI Existential Risks-B-6" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">Advanced AI is more likely to coexist with and benefit humanity than to enslave us.</td>
+                        <td><input type="radio" name="AI Existential Risks-B-7" value="1" data-type="B"></td>
+                        <td><input type="radio" name="AI Existential Risks-B-7" value="2" data-type="B"></td>
+                        <td><input type="radio" name="AI Existential Risks-B-7" value="3" data-type="B"></td>
+                        <td><input type="radio" name="AI Existential Risks-B-7" value="4" data-type="B"></td>
+                        <td><input type="radio" name="AI Existential Risks-B-7" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">The development of AGI doesn't necessarily mean humans will become obsolete.</td>
+                        <td><input type="radio" name="AI Existential Risks-B-8" value="1" data-type="B"></td>
+                        <td><input type="radio" name="AI Existential Risks-B-8" value="2" data-type="B"></td>
+                        <td><input type="radio" name="AI Existential Risks-B-8" value="3" data-type="B"></td>
+                        <td><input type="radio" name="AI Existential Risks-B-8" value="4" data-type="B"></td>
+                        <td><input type="radio" name="AI Existential Risks-B-8" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">AI will likely be crucial in solving environmental crises rather than exacerbating them.</td>
+                        <td><input type="radio" name="AI Existential Risks-B-9" value="1" data-type="B"></td>
+                        <td><input type="radio" name="AI Existential Risks-B-9" value="2" data-type="B"></td>
+                        <td><input type="radio" name="AI Existential Risks-B-9" value="3" data-type="B"></td>
+                        <td><input type="radio" name="AI Existential Risks-B-9" value="4" data-type="B"></td>
+                        <td><input type="radio" name="AI Existential Risks-B-9" value="5" data-type="B"></td>
+                    </tr>
+                <tr class='section-header'><td colspan='6'>Future Governmental Response - Set A</td></tr>
+                    <tr class="question-row">
+                        <td class="question">Governments will successfully adapt regulations to keep pace with AI advancements.</td>
+                        <td><input type="radio" name="Future Governmental Response-A-0" value="1" data-type="A"></td>
+                        <td><input type="radio" name="Future Governmental Response-A-0" value="2" data-type="A"></td>
+                        <td><input type="radio" name="Future Governmental Response-A-0" value="3" data-type="A"></td>
+                        <td><input type="radio" name="Future Governmental Response-A-0" value="4" data-type="A"></td>
+                        <td><input type="radio" name="Future Governmental Response-A-0" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">International cooperation will effectively address global AI challenges.</td>
+                        <td><input type="radio" name="Future Governmental Response-A-1" value="1" data-type="A"></td>
+                        <td><input type="radio" name="Future Governmental Response-A-1" value="2" data-type="A"></td>
+                        <td><input type="radio" name="Future Governmental Response-A-1" value="3" data-type="A"></td>
+                        <td><input type="radio" name="Future Governmental Response-A-1" value="4" data-type="A"></td>
+                        <td><input type="radio" name="Future Governmental Response-A-1" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">Policymakers will develop sufficient expertise to make informed decisions about AI governance.</td>
+                        <td><input type="radio" name="Future Governmental Response-A-2" value="1" data-type="A"></td>
+                        <td><input type="radio" name="Future Governmental Response-A-2" value="2" data-type="A"></td>
+                        <td><input type="radio" name="Future Governmental Response-A-2" value="3" data-type="A"></td>
+                        <td><input type="radio" name="Future Governmental Response-A-2" value="4" data-type="A"></td>
+                        <td><input type="radio" name="Future Governmental Response-A-2" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">Government-led initiatives will successfully mitigate potential job displacement caused by AI.</td>
+                        <td><input type="radio" name="Future Governmental Response-A-3" value="1" data-type="A"></td>
+                        <td><input type="radio" name="Future Governmental Response-A-3" value="2" data-type="A"></td>
+                        <td><input type="radio" name="Future Governmental Response-A-3" value="3" data-type="A"></td>
+                        <td><input type="radio" name="Future Governmental Response-A-3" value="4" data-type="A"></td>
+                        <td><input type="radio" name="Future Governmental Response-A-3" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">Public institutions will effectively use AI to improve services and governance.</td>
+                        <td><input type="radio" name="Future Governmental Response-A-4" value="1" data-type="A"></td>
+                        <td><input type="radio" name="Future Governmental Response-A-4" value="2" data-type="A"></td>
+                        <td><input type="radio" name="Future Governmental Response-A-4" value="3" data-type="A"></td>
+                        <td><input type="radio" name="Future Governmental Response-A-4" value="4" data-type="A"></td>
+                        <td><input type="radio" name="Future Governmental Response-A-4" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">Governments will successfully implement 'pause' or slowdown measures on AI development if necessary.</td>
+                        <td><input type="radio" name="Future Governmental Response-A-5" value="1" data-type="A"></td>
+                        <td><input type="radio" name="Future Governmental Response-A-5" value="2" data-type="A"></td>
+                        <td><input type="radio" name="Future Governmental Response-A-5" value="3" data-type="A"></td>
+                        <td><input type="radio" name="Future Governmental Response-A-5" value="4" data-type="A"></td>
+                        <td><input type="radio" name="Future Governmental Response-A-5" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">Democratic processes will adequately address societal concerns about AI.</td>
+                        <td><input type="radio" name="Future Governmental Response-A-6" value="1" data-type="A"></td>
+                        <td><input type="radio" name="Future Governmental Response-A-6" value="2" data-type="A"></td>
+                        <td><input type="radio" name="Future Governmental Response-A-6" value="3" data-type="A"></td>
+                        <td><input type="radio" name="Future Governmental Response-A-6" value="4" data-type="A"></td>
+                        <td><input type="radio" name="Future Governmental Response-A-6" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">Governments will effectively balance innovation and safety in AI regulation.</td>
+                        <td><input type="radio" name="Future Governmental Response-A-7" value="1" data-type="A"></td>
+                        <td><input type="radio" name="Future Governmental Response-A-7" value="2" data-type="A"></td>
+                        <td><input type="radio" name="Future Governmental Response-A-7" value="3" data-type="A"></td>
+                        <td><input type="radio" name="Future Governmental Response-A-7" value="4" data-type="A"></td>
+                        <td><input type="radio" name="Future Governmental Response-A-7" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">Public-private partnerships will lead to responsible AI development and deployment.</td>
+                        <td><input type="radio" name="Future Governmental Response-A-8" value="1" data-type="A"></td>
+                        <td><input type="radio" name="Future Governmental Response-A-8" value="2" data-type="A"></td>
+                        <td><input type="radio" name="Future Governmental Response-A-8" value="3" data-type="A"></td>
+                        <td><input type="radio" name="Future Governmental Response-A-8" value="4" data-type="A"></td>
+                        <td><input type="radio" name="Future Governmental Response-A-8" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">Governments will successfully prevent the weaponization of AI technologies.</td>
+                        <td><input type="radio" name="Future Governmental Response-A-9" value="1" data-type="A"></td>
+                        <td><input type="radio" name="Future Governmental Response-A-9" value="2" data-type="A"></td>
+                        <td><input type="radio" name="Future Governmental Response-A-9" value="3" data-type="A"></td>
+                        <td><input type="radio" name="Future Governmental Response-A-9" value="4" data-type="A"></td>
+                        <td><input type="radio" name="Future Governmental Response-A-9" value="5" data-type="A"></td>
+                    </tr>
+                <tr class='section-header'><td colspan='6'>Future Governmental Response - Set B</td></tr>
+                    <tr class="question-row">
+                        <td class="question">Government regulations will always lag behind AI technological advancements.</td>
+                        <td><input type="radio" name="Future Governmental Response-B-0" value="1" data-type="B"></td>
+                        <td><input type="radio" name="Future Governmental Response-B-0" value="2" data-type="B"></td>
+                        <td><input type="radio" name="Future Governmental Response-B-0" value="3" data-type="B"></td>
+                        <td><input type="radio" name="Future Governmental Response-B-0" value="4" data-type="B"></td>
+                        <td><input type="radio" name="Future Governmental Response-B-0" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">International disagreements will hinder effective global governance of AI.</td>
+                        <td><input type="radio" name="Future Governmental Response-B-1" value="1" data-type="B"></td>
+                        <td><input type="radio" name="Future Governmental Response-B-1" value="2" data-type="B"></td>
+                        <td><input type="radio" name="Future Governmental Response-B-1" value="3" data-type="B"></td>
+                        <td><input type="radio" name="Future Governmental Response-B-1" value="4" data-type="B"></td>
+                        <td><input type="radio" name="Future Governmental Response-B-1" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">Policymakers will struggle to understand AI well enough to regulate it effectively.</td>
+                        <td><input type="radio" name="Future Governmental Response-B-2" value="1" data-type="B"></td>
+                        <td><input type="radio" name="Future Governmental Response-B-2" value="2" data-type="B"></td>
+                        <td><input type="radio" name="Future Governmental Response-B-2" value="3" data-type="B"></td>
+                        <td><input type="radio" name="Future Governmental Response-B-2" value="4" data-type="B"></td>
+                        <td><input type="radio" name="Future Governmental Response-B-2" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">Governments will be unprepared to handle widespread AI-induced unemployment.</td>
+                        <td><input type="radio" name="Future Governmental Response-B-3" value="1" data-type="B"></td>
+                        <td><input type="radio" name="Future Governmental Response-B-3" value="2" data-type="B"></td>
+                        <td><input type="radio" name="Future Governmental Response-B-3" value="3" data-type="B"></td>
+                        <td><input type="radio" name="Future Governmental Response-B-3" value="4" data-type="B"></td>
+                        <td><input type="radio" name="Future Governmental Response-B-3" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">Bureaucratic inefficiencies will prevent effective governmental use of AI.</td>
+                        <td><input type="radio" name="Future Governmental Response-B-4" value="1" data-type="B"></td>
+                        <td><input type="radio" name="Future Governmental Response-B-4" value="2" data-type="B"></td>
+                        <td><input type="radio" name="Future Governmental Response-B-4" value="3" data-type="B"></td>
+                        <td><input type="radio" name="Future Governmental Response-B-4" value="4" data-type="B"></td>
+                        <td><input type="radio" name="Future Governmental Response-B-4" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">Attempts to pause or slow down AI development will be futile or counterproductive.</td>
+                        <td><input type="radio" name="Future Governmental Response-B-5" value="1" data-type="B"></td>
+                        <td><input type="radio" name="Future Governmental Response-B-5" value="2" data-type="B"></td>
+                        <td><input type="radio" name="Future Governmental Response-B-5" value="3" data-type="B"></td>
+                        <td><input type="radio" name="Future Governmental Response-B-5" value="4" data-type="B"></td>
+                        <td><input type="radio" name="Future Governmental Response-B-5" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">Democratic systems will be too slow to respond to rapid AI-driven societal changes.</td>
+                        <td><input type="radio" name="Future Governmental Response-B-6" value="1" data-type="B"></td>
+                        <td><input type="radio" name="Future Governmental Response-B-6" value="2" data-type="B"></td>
+                        <td><input type="radio" name="Future Governmental Response-B-6" value="3" data-type="B"></td>
+                        <td><input type="radio" name="Future Governmental Response-B-6" value="4" data-type="B"></td>
+                        <td><input type="radio" name="Future Governmental Response-B-6" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">Government regulations will stifle AI innovation without improving safety.</td>
+                        <td><input type="radio" name="Future Governmental Response-B-7" value="1" data-type="B"></td>
+                        <td><input type="radio" name="Future Governmental Response-B-7" value="2" data-type="B"></td>
+                        <td><input type="radio" name="Future Governmental Response-B-7" value="3" data-type="B"></td>
+                        <td><input type="radio" name="Future Governmental Response-B-7" value="4" data-type="B"></td>
+                        <td><input type="radio" name="Future Governmental Response-B-7" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">Corporate interests will dominate AI governance, sidelining public welfare concerns.</td>
+                        <td><input type="radio" name="Future Governmental Response-B-8" value="1" data-type="B"></td>
+                        <td><input type="radio" name="Future Governmental Response-B-8" value="2" data-type="B"></td>
+                        <td><input type="radio" name="Future Governmental Response-B-8" value="3" data-type="B"></td>
+                        <td><input type="radio" name="Future Governmental Response-B-8" value="4" data-type="B"></td>
+                        <td><input type="radio" name="Future Governmental Response-B-8" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">Governments will be unable to prevent AI from being used for harmful purposes.</td>
+                        <td><input type="radio" name="Future Governmental Response-B-9" value="1" data-type="B"></td>
+                        <td><input type="radio" name="Future Governmental Response-B-9" value="2" data-type="B"></td>
+                        <td><input type="radio" name="Future Governmental Response-B-9" value="3" data-type="B"></td>
+                        <td><input type="radio" name="Future Governmental Response-B-9" value="4" data-type="B"></td>
+                        <td><input type="radio" name="Future Governmental Response-B-9" value="5" data-type="B"></td>
+                    </tr>
+                <tr class='section-header'><td colspan='6'>Future AI Capabilities - Set A</td></tr>
+                    <tr class="question-row">
+                        <td class="question">A technological singularity, beyond which predictions become impossible, will occur this century.</td>
+                        <td><input type="radio" name="Future AI Capabilities-A-0" value="1" data-type="A"></td>
+                        <td><input type="radio" name="Future AI Capabilities-A-0" value="2" data-type="A"></td>
+                        <td><input type="radio" name="Future AI Capabilities-A-0" value="3" data-type="A"></td>
+                        <td><input type="radio" name="Future AI Capabilities-A-0" value="4" data-type="A"></td>
+                        <td><input type="radio" name="Future AI Capabilities-A-0" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">Robots will match or exceed human performance in all physical tasks within the next 30 years.</td>
+                        <td><input type="radio" name="Future AI Capabilities-A-1" value="1" data-type="A"></td>
+                        <td><input type="radio" name="Future AI Capabilities-A-1" value="2" data-type="A"></td>
+                        <td><input type="radio" name="Future AI Capabilities-A-1" value="3" data-type="A"></td>
+                        <td><input type="radio" name="Future AI Capabilities-A-1" value="4" data-type="A"></td>
+                        <td><input type="radio" name="Future AI Capabilities-A-1" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">Artificial General Intelligence (AGI) will be achieved before 2050.</td>
+                        <td><input type="radio" name="Future AI Capabilities-A-2" value="1" data-type="A"></td>
+                        <td><input type="radio" name="Future AI Capabilities-A-2" value="2" data-type="A"></td>
+                        <td><input type="radio" name="Future AI Capabilities-A-2" value="3" data-type="A"></td>
+                        <td><input type="radio" name="Future AI Capabilities-A-2" value="4" data-type="A"></td>
+                        <td><input type="radio" name="Future AI Capabilities-A-2" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">AI will surpass human-level intelligence in all cognitive domains by 2060.</td>
+                        <td><input type="radio" name="Future AI Capabilities-A-3" value="1" data-type="A"></td>
+                        <td><input type="radio" name="Future AI Capabilities-A-3" value="2" data-type="A"></td>
+                        <td><input type="radio" name="Future AI Capabilities-A-3" value="3" data-type="A"></td>
+                        <td><input type="radio" name="Future AI Capabilities-A-3" value="4" data-type="A"></td>
+                        <td><input type="radio" name="Future AI Capabilities-A-3" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">The growth of AI capabilities will continue to be exponential for the foreseeable future.</td>
+                        <td><input type="radio" name="Future AI Capabilities-A-4" value="1" data-type="A"></td>
+                        <td><input type="radio" name="Future AI Capabilities-A-4" value="2" data-type="A"></td>
+                        <td><input type="radio" name="Future AI Capabilities-A-4" value="3" data-type="A"></td>
+                        <td><input type="radio" name="Future AI Capabilities-A-4" value="4" data-type="A"></td>
+                        <td><input type="radio" name="Future AI Capabilities-A-4" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">AI systems will be capable of true creativity and original thought within the next decade.</td>
+                        <td><input type="radio" name="Future AI Capabilities-A-5" value="1" data-type="A"></td>
+                        <td><input type="radio" name="Future AI Capabilities-A-5" value="2" data-type="A"></td>
+                        <td><input type="radio" name="Future AI Capabilities-A-5" value="3" data-type="A"></td>
+                        <td><input type="radio" name="Future AI Capabilities-A-5" value="4" data-type="A"></td>
+                        <td><input type="radio" name="Future AI Capabilities-A-5" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">Fully autonomous AI systems will make most strategic decisions in large corporations by 2040.</td>
+                        <td><input type="radio" name="Future AI Capabilities-A-6" value="1" data-type="A"></td>
+                        <td><input type="radio" name="Future AI Capabilities-A-6" value="2" data-type="A"></td>
+                        <td><input type="radio" name="Future AI Capabilities-A-6" value="3" data-type="A"></td>
+                        <td><input type="radio" name="Future AI Capabilities-A-6" value="4" data-type="A"></td>
+                        <td><input type="radio" name="Future AI Capabilities-A-6" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">AI will solve currently intractable scientific problems (e.g., fusion energy, cure for cancer) by 2070.</td>
+                        <td><input type="radio" name="Future AI Capabilities-A-7" value="1" data-type="A"></td>
+                        <td><input type="radio" name="Future AI Capabilities-A-7" value="2" data-type="A"></td>
+                        <td><input type="radio" name="Future AI Capabilities-A-7" value="3" data-type="A"></td>
+                        <td><input type="radio" name="Future AI Capabilities-A-7" value="4" data-type="A"></td>
+                        <td><input type="radio" name="Future AI Capabilities-A-7" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">Human-level machine consciousness will be achieved within this century.</td>
+                        <td><input type="radio" name="Future AI Capabilities-A-8" value="1" data-type="A"></td>
+                        <td><input type="radio" name="Future AI Capabilities-A-8" value="2" data-type="A"></td>
+                        <td><input type="radio" name="Future AI Capabilities-A-8" value="3" data-type="A"></td>
+                        <td><input type="radio" name="Future AI Capabilities-A-8" value="4" data-type="A"></td>
+                        <td><input type="radio" name="Future AI Capabilities-A-8" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">AI will be indistinguishable from humans in open-ended conversations by 2030.</td>
+                        <td><input type="radio" name="Future AI Capabilities-A-9" value="1" data-type="A"></td>
+                        <td><input type="radio" name="Future AI Capabilities-A-9" value="2" data-type="A"></td>
+                        <td><input type="radio" name="Future AI Capabilities-A-9" value="3" data-type="A"></td>
+                        <td><input type="radio" name="Future AI Capabilities-A-9" value="4" data-type="A"></td>
+                        <td><input type="radio" name="Future AI Capabilities-A-9" value="5" data-type="A"></td>
+                    </tr>
+                <tr class='section-header'><td colspan='6'>Future AI Capabilities - Set B</td></tr>
+                    <tr class="question-row">
+                        <td class="question">The concept of a technological singularity is more science fiction than a likely future scenario.</td>
+                        <td><input type="radio" name="Future AI Capabilities-B-0" value="1" data-type="B"></td>
+                        <td><input type="radio" name="Future AI Capabilities-B-0" value="2" data-type="B"></td>
+                        <td><input type="radio" name="Future AI Capabilities-B-0" value="3" data-type="B"></td>
+                        <td><input type="radio" name="Future AI Capabilities-B-0" value="4" data-type="B"></td>
+                        <td><input type="radio" name="Future AI Capabilities-B-0" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">Human dexterity and adaptability in physical tasks will remain superior to robots in many areas.</td>
+                        <td><input type="radio" name="Future AI Capabilities-B-1" value="1" data-type="B"></td>
+                        <td><input type="radio" name="Future AI Capabilities-B-1" value="2" data-type="B"></td>
+                        <td><input type="radio" name="Future AI Capabilities-B-1" value="3" data-type="B"></td>
+                        <td><input type="radio" name="Future AI Capabilities-B-1" value="4" data-type="B"></td>
+                        <td><input type="radio" name="Future AI Capabilities-B-1" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">The development of true AGI is much further away than most predictions suggest.</td>
+                        <td><input type="radio" name="Future AI Capabilities-B-2" value="1" data-type="B"></td>
+                        <td><input type="radio" name="Future AI Capabilities-B-2" value="2" data-type="B"></td>
+                        <td><input type="radio" name="Future AI Capabilities-B-2" value="3" data-type="B"></td>
+                        <td><input type="radio" name="Future AI Capabilities-B-2" value="4" data-type="B"></td>
+                        <td><input type="radio" name="Future AI Capabilities-B-2" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">There will always be cognitive domains where humans outperform AI.</td>
+                        <td><input type="radio" name="Future AI Capabilities-B-3" value="1" data-type="B"></td>
+                        <td><input type="radio" name="Future AI Capabilities-B-3" value="2" data-type="B"></td>
+                        <td><input type="radio" name="Future AI Capabilities-B-3" value="3" data-type="B"></td>
+                        <td><input type="radio" name="Future AI Capabilities-B-3" value="4" data-type="B"></td>
+                        <td><input type="radio" name="Future AI Capabilities-B-3" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">AI capability growth will likely follow a sigmoid curve, eventually slowing down.</td>
+                        <td><input type="radio" name="Future AI Capabilities-B-4" value="1" data-type="B"></td>
+                        <td><input type="radio" name="Future AI Capabilities-B-4" value="2" data-type="B"></td>
+                        <td><input type="radio" name="Future AI Capabilities-B-4" value="3" data-type="B"></td>
+                        <td><input type="radio" name="Future AI Capabilities-B-4" value="4" data-type="B"></td>
+                        <td><input type="radio" name="Future AI Capabilities-B-4" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">AI systems will remain tools for enhancing human creativity rather than replacing it.</td>
+                        <td><input type="radio" name="Future AI Capabilities-B-5" value="1" data-type="B"></td>
+                        <td><input type="radio" name="Future AI Capabilities-B-5" value="2" data-type="B"></td>
+                        <td><input type="radio" name="Future AI Capabilities-B-5" value="3" data-type="B"></td>
+                        <td><input type="radio" name="Future AI Capabilities-B-5" value="4" data-type="B"></td>
+                        <td><input type="radio" name="Future AI Capabilities-B-5" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">Human judgment will remain crucial in high-level corporate decision-making.</td>
+                        <td><input type="radio" name="Future AI Capabilities-B-6" value="1" data-type="B"></td>
+                        <td><input type="radio" name="Future AI Capabilities-B-6" value="2" data-type="B"></td>
+                        <td><input type="radio" name="Future AI Capabilities-B-6" value="3" data-type="B"></td>
+                        <td><input type="radio" name="Future AI Capabilities-B-6" value="4" data-type="B"></td>
+                        <td><input type="radio" name="Future AI Capabilities-B-6" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">The complexity of certain scientific problems will continue to challenge AI capabilities.</td>
+                        <td><input type="radio" name="Future AI Capabilities-B-7" value="1" data-type="B"></td>
+                        <td><input type="radio" name="Future AI Capabilities-B-7" value="2" data-type="B"></td>
+                        <td><input type="radio" name="Future AI Capabilities-B-7" value="3" data-type="B"></td>
+                        <td><input type="radio" name="Future AI Capabilities-B-7" value="4" data-type="B"></td>
+                        <td><input type="radio" name="Future AI Capabilities-B-7" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">The development of machine consciousness is a philosophical, not a technological, issue.</td>
+                        <td><input type="radio" name="Future AI Capabilities-B-8" value="1" data-type="B"></td>
+                        <td><input type="radio" name="Future AI Capabilities-B-8" value="2" data-type="B"></td>
+                        <td><input type="radio" name="Future AI Capabilities-B-8" value="3" data-type="B"></td>
+                        <td><input type="radio" name="Future AI Capabilities-B-8" value="4" data-type="B"></td>
+                        <td><input type="radio" name="Future AI Capabilities-B-8" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">AI interactions will remain distinctly non-human in subtle but important ways.</td>
+                        <td><input type="radio" name="Future AI Capabilities-B-9" value="1" data-type="B"></td>
+                        <td><input type="radio" name="Future AI Capabilities-B-9" value="2" data-type="B"></td>
+                        <td><input type="radio" name="Future AI Capabilities-B-9" value="3" data-type="B"></td>
+                        <td><input type="radio" name="Future AI Capabilities-B-9" value="4" data-type="B"></td>
+                        <td><input type="radio" name="Future AI Capabilities-B-9" value="5" data-type="B"></td>
+                    </tr>
+                <tr class='section-header'><td colspan='6'>Future Corporate Accountability - Set A</td></tr>
+                    <tr class="question-row">
+                        <td class="question">Corporate interests will align with societal well-being in AI development due to market pressures.</td>
+                        <td><input type="radio" name="Future Corporate Accountability-A-0" value="1" data-type="A"></td>
+                        <td><input type="radio" name="Future Corporate Accountability-A-0" value="2" data-type="A"></td>
+                        <td><input type="radio" name="Future Corporate Accountability-A-0" value="3" data-type="A"></td>
+                        <td><input type="radio" name="Future Corporate Accountability-A-0" value="4" data-type="A"></td>
+                        <td><input type="radio" name="Future Corporate Accountability-A-0" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">Legal liability will effectively motivate corporations to prioritize AI safety and ethics.</td>
+                        <td><input type="radio" name="Future Corporate Accountability-A-1" value="1" data-type="A"></td>
+                        <td><input type="radio" name="Future Corporate Accountability-A-1" value="2" data-type="A"></td>
+                        <td><input type="radio" name="Future Corporate Accountability-A-1" value="3" data-type="A"></td>
+                        <td><input type="radio" name="Future Corporate Accountability-A-1" value="4" data-type="A"></td>
+                        <td><input type="radio" name="Future Corporate Accountability-A-1" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">Industry self-regulation will be sufficient to ensure responsible AI development.</td>
+                        <td><input type="radio" name="Future Corporate Accountability-A-2" value="1" data-type="A"></td>
+                        <td><input type="radio" name="Future Corporate Accountability-A-2" value="2" data-type="A"></td>
+                        <td><input type="radio" name="Future Corporate Accountability-A-2" value="3" data-type="A"></td>
+                        <td><input type="radio" name="Future Corporate Accountability-A-2" value="4" data-type="A"></td>
+                        <td><input type="radio" name="Future Corporate Accountability-A-2" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">Competition among tech companies will lead to more ethical and beneficial AI systems.</td>
+                        <td><input type="radio" name="Future Corporate Accountability-A-3" value="1" data-type="A"></td>
+                        <td><input type="radio" name="Future Corporate Accountability-A-3" value="2" data-type="A"></td>
+                        <td><input type="radio" name="Future Corporate Accountability-A-3" value="3" data-type="A"></td>
+                        <td><input type="radio" name="Future Corporate Accountability-A-3" value="4" data-type="A"></td>
+                        <td><input type="radio" name="Future Corporate Accountability-A-3" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">Corporations will proactively address potential negative impacts of their AI technologies.</td>
+                        <td><input type="radio" name="Future Corporate Accountability-A-4" value="1" data-type="A"></td>
+                        <td><input type="radio" name="Future Corporate Accountability-A-4" value="2" data-type="A"></td>
+                        <td><input type="radio" name="Future Corporate Accountability-A-4" value="3" data-type="A"></td>
+                        <td><input type="radio" name="Future Corporate Accountability-A-4" value="4" data-type="A"></td>
+                        <td><input type="radio" name="Future Corporate Accountability-A-4" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">Shareholder pressure will push companies towards more responsible AI practices.</td>
+                        <td><input type="radio" name="Future Corporate Accountability-A-5" value="1" data-type="A"></td>
+                        <td><input type="radio" name="Future Corporate Accountability-A-5" value="2" data-type="A"></td>
+                        <td><input type="radio" name="Future Corporate Accountability-A-5" value="3" data-type="A"></td>
+                        <td><input type="radio" name="Future Corporate Accountability-A-5" value="4" data-type="A"></td>
+                        <td><input type="radio" name="Future Corporate Accountability-A-5" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">Corporate-led AI development will result in a more prosperous and equitable society.</td>
+                        <td><input type="radio" name="Future Corporate Accountability-A-6" value="1" data-type="A"></td>
+                        <td><input type="radio" name="Future Corporate Accountability-A-6" value="2" data-type="A"></td>
+                        <td><input type="radio" name="Future Corporate Accountability-A-6" value="3" data-type="A"></td>
+                        <td><input type="radio" name="Future Corporate Accountability-A-6" value="4" data-type="A"></td>
+                        <td><input type="radio" name="Future Corporate Accountability-A-6" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">Tech companies will successfully balance profit motives with ethical AI development.</td>
+                        <td><input type="radio" name="Future Corporate Accountability-A-7" value="1" data-type="A"></td>
+                        <td><input type="radio" name="Future Corporate Accountability-A-7" value="2" data-type="A"></td>
+                        <td><input type="radio" name="Future Corporate Accountability-A-7" value="3" data-type="A"></td>
+                        <td><input type="radio" name="Future Corporate Accountability-A-7" value="4" data-type="A"></td>
+                        <td><input type="radio" name="Future Corporate Accountability-A-7" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">Corporate transparency in AI development will increase due to public demand.</td>
+                        <td><input type="radio" name="Future Corporate Accountability-A-8" value="1" data-type="A"></td>
+                        <td><input type="radio" name="Future Corporate Accountability-A-8" value="2" data-type="A"></td>
+                        <td><input type="radio" name="Future Corporate Accountability-A-8" value="3" data-type="A"></td>
+                        <td><input type="radio" name="Future Corporate Accountability-A-8" value="4" data-type="A"></td>
+                        <td><input type="radio" name="Future Corporate Accountability-A-8" value="5" data-type="A"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">Market forces will naturally steer AI development towards beneficial outcomes for humanity.</td>
+                        <td><input type="radio" name="Future Corporate Accountability-A-9" value="1" data-type="A"></td>
+                        <td><input type="radio" name="Future Corporate Accountability-A-9" value="2" data-type="A"></td>
+                        <td><input type="radio" name="Future Corporate Accountability-A-9" value="3" data-type="A"></td>
+                        <td><input type="radio" name="Future Corporate Accountability-A-9" value="4" data-type="A"></td>
+                        <td><input type="radio" name="Future Corporate Accountability-A-9" value="5" data-type="A"></td>
+                    </tr>
+                <tr class='section-header'><td colspan='6'>Future Corporate Accountability - Set B</td></tr>
+                    <tr class="question-row">
+                        <td class="question">Corporate profit motives will consistently override ethical considerations in AI development.</td>
+                        <td><input type="radio" name="Future Corporate Accountability-B-0" value="1" data-type="B"></td>
+                        <td><input type="radio" name="Future Corporate Accountability-B-0" value="2" data-type="B"></td>
+                        <td><input type="radio" name="Future Corporate Accountability-B-0" value="3" data-type="B"></td>
+                        <td><input type="radio" name="Future Corporate Accountability-B-0" value="4" data-type="B"></td>
+                        <td><input type="radio" name="Future Corporate Accountability-B-0" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">Legal systems will struggle to hold corporations accountable for AI-related harms.</td>
+                        <td><input type="radio" name="Future Corporate Accountability-B-1" value="1" data-type="B"></td>
+                        <td><input type="radio" name="Future Corporate Accountability-B-1" value="2" data-type="B"></td>
+                        <td><input type="radio" name="Future Corporate Accountability-B-1" value="3" data-type="B"></td>
+                        <td><input type="radio" name="Future Corporate Accountability-B-1" value="4" data-type="B"></td>
+                        <td><input type="radio" name="Future Corporate Accountability-B-1" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">Industry self-regulation will be insufficient to prevent misuse of AI technologies.</td>
+                        <td><input type="radio" name="Future Corporate Accountability-B-2" value="1" data-type="B"></td>
+                        <td><input type="radio" name="Future Corporate Accountability-B-2" value="2" data-type="B"></td>
+                        <td><input type="radio" name="Future Corporate Accountability-B-2" value="3" data-type="B"></td>
+                        <td><input type="radio" name="Future Corporate Accountability-B-2" value="4" data-type="B"></td>
+                        <td><input type="radio" name="Future Corporate Accountability-B-2" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">AI development will lead to unprecedented concentration of power among a few tech giants.</td>
+                        <td><input type="radio" name="Future Corporate Accountability-B-3" value="1" data-type="B"></td>
+                        <td><input type="radio" name="Future Corporate Accountability-B-3" value="2" data-type="B"></td>
+                        <td><input type="radio" name="Future Corporate Accountability-B-3" value="3" data-type="B"></td>
+                        <td><input type="radio" name="Future Corporate Accountability-B-3" value="4" data-type="B"></td>
+                        <td><input type="radio" name="Future Corporate Accountability-B-3" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">Corporations will exploit AI to manipulate consumers and markets for their benefit.</td>
+                        <td><input type="radio" name="Future Corporate Accountability-B-4" value="1" data-type="B"></td>
+                        <td><input type="radio" name="Future Corporate Accountability-B-4" value="2" data-type="B"></td>
+                        <td><input type="radio" name="Future Corporate Accountability-B-4" value="3" data-type="B"></td>
+                        <td><input type="radio" name="Future Corporate Accountability-B-4" value="4" data-type="B"></td>
+                        <td><input type="radio" name="Future Corporate Accountability-B-4" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">Shareholder value will consistently be prioritized over societal well-being in AI development.</td>
+                        <td><input type="radio" name="Future Corporate Accountability-B-5" value="1" data-type="B"></td>
+                        <td><input type="radio" name="Future Corporate Accountability-B-5" value="2" data-type="B"></td>
+                        <td><input type="radio" name="Future Corporate Accountability-B-5" value="3" data-type="B"></td>
+                        <td><input type="radio" name="Future Corporate Accountability-B-5" value="4" data-type="B"></td>
+                        <td><input type="radio" name="Future Corporate Accountability-B-5" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">Corporate-led AI development will exacerbate social and economic inequalities.</td>
+                        <td><input type="radio" name="Future Corporate Accountability-B-6" value="1" data-type="B"></td>
+                        <td><input type="radio" name="Future Corporate Accountability-B-6" value="2" data-type="B"></td>
+                        <td><input type="radio" name="Future Corporate Accountability-B-6" value="3" data-type="B"></td>
+                        <td><input type="radio" name="Future Corporate Accountability-B-6" value="4" data-type="B"></td>
+                        <td><input type="radio" name="Future Corporate Accountability-B-6" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">Ethical AI development will be seen as a PR exercise rather than a genuine corporate priority.</td>
+                        <td><input type="radio" name="Future Corporate Accountability-B-7" value="1" data-type="B"></td>
+                        <td><input type="radio" name="Future Corporate Accountability-B-7" value="2" data-type="B"></td>
+                        <td><input type="radio" name="Future Corporate Accountability-B-7" value="3" data-type="B"></td>
+                        <td><input type="radio" name="Future Corporate Accountability-B-7" value="4" data-type="B"></td>
+                        <td><input type="radio" name="Future Corporate Accountability-B-7" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">AI technologies will be weaponized by corporations for anti-competitive practices.</td>
+                        <td><input type="radio" name="Future Corporate Accountability-B-8" value="1" data-type="B"></td>
+                        <td><input type="radio" name="Future Corporate Accountability-B-8" value="2" data-type="B"></td>
+                        <td><input type="radio" name="Future Corporate Accountability-B-8" value="3" data-type="B"></td>
+                        <td><input type="radio" name="Future Corporate Accountability-B-8" value="4" data-type="B"></td>
+                        <td><input type="radio" name="Future Corporate Accountability-B-8" value="5" data-type="B"></td>
+                    </tr>
+                
+                    <tr class="question-row">
+                        <td class="question">Unrestrained AI development by corporations will lead to a dystopian future.</td>
+                        <td><input type="radio" name="Future Corporate Accountability-B-9" value="1" data-type="B"></td>
+                        <td><input type="radio" name="Future Corporate Accountability-B-9" value="2" data-type="B"></td>
+                        <td><input type="radio" name="Future Corporate Accountability-B-9" value="3" data-type="B"></td>
+                        <td><input type="radio" name="Future Corporate Accountability-B-9" value="4" data-type="B"></td>
+                        <td><input type="radio" name="Future Corporate Accountability-B-9" value="5" data-type="B"></td>
+                    </tr>
+                
+            </table>
+            <br>
+            <button type="button" onclick="calculateScore()">Generate Score</button>
+            <button type="button" onclick="debugSetAll(1)">Debug (Set All to 1)</button>
+            <button type="button" onclick="debugSetAll(2)">Debug (Set All to 2)</button>
+            <button type="button" onclick="debugSetAll(3)">Debug (Set All to 3)</button>
+            <button type="button" onclick="debugSetAll(4)">Debug (Set All to 4)</button>
+            <button type="button" onclick="debugSetAll(5)">Debug (Set All to 5)</button>
+        </form>
+        <div id="results"></div>
+    </body>
+    </html>
+    
