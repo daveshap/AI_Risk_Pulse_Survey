@@ -19,14 +19,62 @@ By gathering this data, the project seeks to bridge the gap between expert asses
 The AI Risk Pulse Survey employs a rigorous methodology to ensure reliable and comprehensive data collection:
 
 1. **Likert Scales**: Questions are answered on a 5-point Likert scale (Strongly Disagree to Strongly Agree), allowing for nuanced responses and quantitative analysis.
-
 2. **Split-Half Consistency**: Each category contains an equal number of positively and negatively framed questions to reduce response bias and ensure internal consistency.
-
 3. **Polar Questions**: The survey uses pairs of opposing statements to capture the full spectrum of opinions on each topic.
-
 4. **Comprehensive Categorization**: The index is divided into 12 distinct categories, covering demographics, current perceptions, and future projections.
-
 5. **Regular Administration**: The survey is designed to be administered periodically, allowing for longitudinal analysis of AI anxiety trends.
+
+## Repository Contents and Usage
+
+This repository contains the necessary files to generate and use the **AI Risk Pulse Survey** tool. It includes a CSV file with all the survey questions, a Python script to generate the HTML widget, and the resulting HTML file that can be used to administer the survey.
+
+### Repository Files
+
+| File Name          | Description                                                  |
+|--------------------|--------------------------------------------------------------|
+| `README.md`        | This file, containing information about the project and repo |
+| `generate_widget.py` | Python script to generate the HTML widget from the CSV file |
+| `questions.csv`    | CSV file containing all 240 questions for the survey         |
+| `widget.html`      | The generated HTML file containing the interactive survey tool |
+
+### How to Use
+
+1. **Clone the Repository**:
+   ```bash
+   git clone [repository URL]
+   ```
+2. **Navigate to the Repository Directory**:
+   ```bash
+   cd [repository directory]
+   ```
+3. **Ensure Python is Installed**:
+   - Make sure you have Python 3 installed on your system.
+   - You can check by running:
+     ```bash
+     python --version
+     ```
+4. **Generate the Survey Widget**:
+   - Run the Python script to generate or update the `widget.html` file:
+     ```bash
+     python generate_widget.py
+     ```
+5. **Open the Survey**:
+   - Open `widget.html` in a web browser to use the **AI Risk Pulse Survey** tool.
+   - You can do this by double-clicking the `widget.html` file or opening it from within your browser.
+
+### Notes
+
+- **Updating Questions**:
+  - If you need to update or modify the survey questions, edit the `questions.csv` file accordingly.
+  - After making changes, rerun `generate_widget.py` to regenerate the `widget.html` file with the updated questions.
+
+- **Customizing the Survey**:
+  - You can modify the styling or functionality by editing the `generate_widget.py` script.
+  - Ensure that any changes are compatible with the existing structure to maintain proper functionality.
+
+- **Testing**:
+  - The survey includes debug buttons that allow you to set all responses to a specific value for testing purposes.
+  - These can be removed or commented out in the HTML if not needed.
 
 ## Categories
 1. Direct AI Experience: Assesses hands-on experience with AI and machine learning.
